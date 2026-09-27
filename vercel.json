@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/arcade", "destination": "/", "permanent": false },
+    { "source": "/arcade/:path*", "destination": "/", "permanent": false }
+  ]
+}
