@@ -6,7 +6,3 @@
 @keyframes float{from{transform:translateY(-12px) rotate(-8deg)}to{transform:translateY(12px) rotate(8deg)}}
 @media(max-width:600px){.cross:nth-child(n+6){display:none}}
 @media(prefers-reduced-motion:reduce){.cross{animation:none}}
-.harry-wrap{flex:0 0 100%}
-.harry{max-width:520px;margin:10px auto 30px;background:var(--paper);padding:12px 12px 0;transform:rotate(-2deg);box-shadow:9px 10px 0 #0007;border:1px solid #161616}
-.harry img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-.harry figcaption{color:var(--ink);font:clamp(18px,4vw,28px)/1.1 'Anton',Impact,sans-serif;text-align:center;padding:14px 0 16px;letter-spacing:.5px}
