@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseCredits,payout,mineMultiplier,placeMines,diceResult,PLINKO,plinkoResult,crashPoint,rouletteResult,RED,loadLedger} from '../engine.js';
+test('credit parsing uses exact integer hundredths and rejects invalid stakes',()=>{assert.equal(parseCredits('12.34'),1234);assert.equal(parseCredits('0.01'),1);for(const s of ['-1','0','1.001','NaN','1e3','Infinity','1000001'])assert.throws(()=>parseCredits(s));});
+test('payout rounds down and rejects unsafe math',()=>{assert.equal(payout(1001,1.94),1941);assert.equal(payout(100,0),0);assert.throws(()=>payout(100,NaN));});
+test('mine payout corresponds to combinatorial survival odds',()=>{assert.equal(mineMultiplier(3,0),1);assert.ok(Math.abs(mineMultiplier(3,2)*((22/25)*(21/24))-.97)<1e-12);const mines=placeMines(10,()=>0);assert.equal(mines.size,10);assert.ok([...mines].every(x=>x>=0&&x<25));});
+test('dice exact threshold loses and both probability extremes work',()=>{assert.equal(diceResult(50,4999).win,true);assert.equal(diceResult(50,5000).win,false);assert.equal(diceResult(5,499).multiplier,19.4);assert.equal(diceResult(95,9500).win,false);});
+test('roulette covers all 37 outcomes exactly once, including green zero',()=>{assert.equal(RED.size,18);let red=0,black=0,green=0;for(let i=0;i<37;i++){red+=Number(rouletteResult('red',i).win);black+=Number(rouletteResult('black',i).win);green+=Number(rouletteResult('green',i).win);}assert.deepEqual([red,black,green],[18,18,1]);assert.equal(rouletteResult('green',0).multiplier,36);});
+test('plinko bin maths and documented return are correct',()=>{assert.equal(plinkoResult('low',()=>0).bin,0);assert.equal(plinkoResult('high',()=>1).bin,8);const weights=[1,8,28,56,70,56,28,8,1];assert.equal(PLINKO.low.reduce((a,n,i)=>a+n*weights[i],0)/256,.95);assert.ok(Math.abs(PLINKO.high.reduce((a,n,i)=>a+n*weights[i],0)/256-.959375)<1e-12);});
+test('crash is bounded and allows instant crashes',()=>{assert.equal(crashPoint(0),1);assert.equal(crashPoint(.9999999),100);assert.throws(()=>crashPoint(1));});
+test('corrupt stored balances recover to a fresh ledger',()=>{assert.equal(loadLedger({getItem:()=>'{bad'}).balance,100000);assert.equal(loadLedger({getItem:()=>JSON.stringify({version:1,balance:-100})}).balance,100000);});
