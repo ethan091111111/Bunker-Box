@@ -60,3 +60,7 @@ if(current.id==='dodge'){s.rocks.forEach(r=>{ctx.strokeStyle='#ff956677';ctx.lin
 if(current.id==='reaction'){rect(0,0,W,H,s.green?'#b7ff39':'#673056');text(s.green?'TAP. RIGHT. NOW.':'WAIT FOR GREEN…',450,235,44,s.green?'#121310':'#f1f0e8');text(s.green?'SPACE / CLICK / ACTION':'NO EARLY STARTS.',450,285,18,s.green?'#121310':'#f1d8e9')}
 }
 renderCards();
+const crossSpots=[[4,18,'#b7ff39'],[93,14,'#ff66c4'],[48,8,'#f1ed85'],[8,72,'#ff66c4'],[88,62,'#b7ff39'],[30,44,'#83dce9'],[70,86,'#b59aff'],[55,58,'#ff9566'],[20,92,'#f1ed85'],[78,36,'#83dce9']];
+const crossLayer=document.createElement('div');crossLayer.className='crosses';
+crossLayer.innerHTML=crossSpots.map(([x,y,c],i)=>`<a class="cross" href="https://www.bible.com/bible/1/JHN.1.KJV" target="_blank" rel="noopener" aria-label="Open the Bible" title="Open the Bible" style="left:${x}%;top:${y}%;--c:${c};--size:${22+(i%3)*8}px;--dur:${3+(i%4)*.7}s;--delay:${-i*.6}s"><svg viewBox="0 0 20 28" aria-hidden="true"><path fill="currentColor" d="M8 0h4v8h8v4h-8v16H8V12H0V8h8z"/></svg></a>`).join('');
+document.body.appendChild(crossLayer);
