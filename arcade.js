@@ -48,7 +48,7 @@ if(current.id==='dodge'){s.t+=dt;s.x=Math.max(22,Math.min(W-22,s.x+steer*dt*500)
 if(current.id==='reaction'){s.t+=dt;if(!s.green&&s.t>=s.wait){s.green=true;s.started=performance.now()}}
 }
 function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h)}
-function text(str,x,y,size=30,c='#f1f0e8',align='center'){ctx.fillStyle=c;ctx.font=`bold ${size}px monospace`;ctx.textAlign=align;ctx.fillText(str,x,y)}
+function text(str,x,y,size=30,c='#f1f0e8',align='center'){ctx.fillStyle=c;ctx.font=`bold ${size}px 'Space Mono',monospace`;ctx.textAlign=align;ctx.fillText(str,x,y)}
 function circle(x,y,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
 function drawFace(x,y,r){ctx.save();ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.clip();if(face.complete&&face.naturalWidth)ctx.drawImage(face,x-r,y-r,r*2,r*2);else rect(x-r,y-r,r*2,r*2,'#ff66c4');ctx.restore();ctx.strokeStyle='#b7ff39';ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke()}
 function draw(){rect(0,0,W,H,'#0d1512');ctx.strokeStyle='#233328';ctx.lineWidth=1;for(let x=0;x<W;x+=30){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}const s=state;
