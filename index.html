@@ -167,7 +167,8 @@
 
   .alt { background: var(--sand-200); }
 
-  .team { display: grid; grid-template-columns: repeat(2, minmax(0, 320px)); justify-content: center; gap: 24px; }
+  .team { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+  .team .member { flex: 0 1 320px; }
   .member { background: var(--white); border: 1px solid var(--sand-200); border-radius: var(--radius); overflow: hidden; text-align: center; }
   .member img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
   .member div { padding: 18px 20px 22px; }
@@ -182,7 +183,6 @@
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; gap: 32px; margin-top: 36px; }
     .features, .steps { grid-template-columns: 1fr; }
-    .team { grid-template-columns: minmax(0, 320px); }
     .tag { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -319,17 +319,9 @@
 
 <section>
   <div class="wrap">
-    <h2 class="section-title">Meet the team leaders</h2>
+    <h2 class="section-title">Meet the team</h2>
     <p class="section-sub">The golfers behind Bunker Box.</p>
     <div class="team">
-      <div class="member">
-        <img src="/images/calum.jpg" alt="Calum Casey" width="600" height="600" loading="lazy">
-        <div>
-          <h3>Calum Casey</h3>
-          <span class="role">Managing Director</span>
-          <p class="bio">The funny one. Keeps the team laughing and meetings (mostly) on track, and blames the wind for every bad shot.</p>
-        </div>
-      </div>
       <div class="member">
         <img src="/images/frazer.jpg" alt="Frazer Dall" width="600" height="600" loading="lazy">
         <div>
