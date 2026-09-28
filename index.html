@@ -3,364 +3,429 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bunker Box — Join the Waiting List</title>
-<meta name="description" content="Bunker Box golf mystery boxes: balls, tees, gear and surprises. Join the waiting list for first access.">
-<meta name="theme-color" content="#0e1310">
-<meta property="og:title" content="Bunker Box — Golf Mystery Boxes">
-<meta property="og:description" content="Golf's best surprise is in the bunker. Join the waiting list.">
-<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3JwgfN8pP8Ll9LRNhtiUvYdFbB9/hf_20260928_161542_93fffcea-1dad-4241-912c-cf20e5bf7620.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='8' y='24' width='48' height='32' rx='4' fill='%23121310'/><rect x='4' y='16' width='56' height='12' rx='3' fill='%23b7ff39'/><rect x='29' y='16' width='6' height='40' fill='%23b7ff39'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="https://d8j0ntlcm91z4.cloudfront.net/user_3JwgfN8pP8Ll9LRNhtiUvYdFbB9/hf_20260928_161542_93fffcea-1dad-4241-912c-cf20e5bf7620.png">
+<title>Bunker Box — Get your name on the board</title>
+<meta name="description" content="Bunker Box golf mystery boxes go on sale before Christmas 2026. Join the waiting list for first access.">
+<meta name="theme-color" content="#123d27">
+<meta property="og:title" content="Bunker Box — What's in the box?">
+<meta property="og:description" content="Golf mystery boxes, on sale before Christmas 2026. Get your name on the board.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%23123d27'/><rect x='10' y='14' width='44' height='36' rx='3' fill='%23f4f5f0'/><text x='32' y='43' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%23c4122f'>?</text></svg>">
+<link rel="preload" href="/fonts/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face { font-family: "Big Shoulders"; src: url("/fonts/big-shoulders.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Barlow"; src: url("/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Barlow"; src: url("/fonts/barlow-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Barlow"; src: url("/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Barlow Condensed"; src: url("/fonts/barlow-condensed-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+
   :root {
-    --lime: #b7ff39;
-    --lime-deep: #7db327;
-    --sand: #f0dca8;
-    --ink: #0e1310;
-    --panel: #151b17;
-    --paper: #f1f0e8;
-    --muted: #a3a89a;
-    --error: #ff7b7b;
+    --turf: #1d5a37;
+    --turf-2: #21633d;
+    --turf-deep: #123d27;
+    --turf-ink: #0b2718;
+    --board: #f4f5f0;
+    --plate: #fbfcf8;
+    --slot: #dfe3da;
+    --rule: #c9cec2;
+    --ink: #111512;
+    --ink-2: #4a5249;
+    --red: #c4122f;
+    --on-turf: #f1f6ef;
+    --on-turf-2: #c3dccb;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --display: "Big Shoulders", "Barlow Condensed", sans-serif;
+    --text: "Barlow", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--ink); color: var(--paper); font-family: 'Space Grotesk', Arial, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  a { color: inherit; }
-
-  .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; isolation: isolate; }
-  .hero-bg { position: absolute; inset: -4%; z-index: -3; background: #1d2a1c url("https://d8j0ntlcm91z4.cloudfront.net/user_3JwgfN8pP8Ll9LRNhtiUvYdFbB9/hf_20260928_161542_93fffcea-1dad-4241-912c-cf20e5bf7620.png") center / cover no-repeat; animation: kenburns 26s ease-in-out infinite alternate; transform-origin: 70% 60%; }
-  .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(14,19,16,.94) 0%, rgba(14,19,16,.78) 38%, rgba(14,19,16,.15) 70%, rgba(14,19,16,.35) 100%), linear-gradient(0deg, var(--ink) 0%, transparent 30%); }
-  .glow { position: absolute; z-index: -1; right: 18%; top: 48%; width: 38vmax; height: 38vmax; border-radius: 50%; background: radial-gradient(circle, rgba(183,255,57,.28), transparent 62%); filter: blur(10px); animation: pulse 5s ease-in-out infinite; pointer-events: none; }
-  #sand { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-  @keyframes kenburns { from { transform: scale(1) translate(0,0); } to { transform: scale(1.14) translate(-2%, -1.5%); } }
-  @keyframes pulse { 0%,100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.06); } }
-
-  nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 5%; gap: 16px; }
-  .brand { display: flex; align-items: center; gap: 10px; font: 26px 'Anton', Impact, sans-serif; letter-spacing: .5px; text-decoration: none; }
-  .brand b { color: var(--lime); font-weight: 400; }
-  .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; background: var(--lime); color: var(--ink); transform: rotate(-6deg); font-size: 22px; }
-  .nav-cta { font: 700 12px 'Space Mono', monospace; letter-spacing: 1px; text-decoration: none; border: 1px solid rgba(241,240,232,.35); padding: 10px 16px; backdrop-filter: blur(6px); transition: border-color .2s, color .2s; }
-  .nav-cta:hover { border-color: var(--lime); color: var(--lime); }
-
-  .hero-inner { flex: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: 40px; padding: 20px 5% 80px; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 700 12px 'Space Mono', monospace; letter-spacing: 2px; color: var(--lime); text-transform: uppercase; }
-  .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); animation: ping 1.8s infinite; }
-  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(183,255,57,.6); } 80%,100% { box-shadow: 0 0 0 12px rgba(183,255,57,0); } }
-  h1 { font: clamp(56px, 8.2vw, 124px)/.92 'Anton', Impact, sans-serif; margin: 18px 0 20px; text-transform: uppercase; }
-  h1 .line { display: block; overflow: hidden; }
-  h1 .line span { display: inline-block; transform: translateY(105%); animation: rise .9s cubic-bezier(.2,.8,.2,1) forwards; }
-  h1 .line:nth-child(2) span { animation-delay: .12s; }
-  h1 .line:nth-child(3) span { animation-delay: .24s; color: var(--lime); }
-  @keyframes rise { to { transform: none; } }
-  .lede { font-size: clamp(17px, 1.6vw, 20px); color: #d9dbd2; max-width: 520px; margin: 0 0 26px; opacity: 0; animation: fade .8s .5s forwards; }
-  @keyframes fade { to { opacity: 1; } }
-  .stats { display: flex; gap: 28px; flex-wrap: wrap; opacity: 0; animation: fade .8s .7s forwards; }
-  .stat strong { display: block; font: 38px/1 'Anton', Impact, sans-serif; color: var(--paper); }
-  .stat span { font: 11px 'Space Mono', monospace; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
-
-  .card { position: relative; background: rgba(21,27,23,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(183,255,57,.25); padding: 30px; max-width: 460px; width: 100%; justify-self: end; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); opacity: 0; transform: translateY(24px); animation: card-in .9s .35s cubic-bezier(.2,.8,.2,1) forwards; }
-  .card::before { content: ""; position: absolute; inset: -1px; padding: 1px; background: conic-gradient(from var(--spin, 0deg), transparent 0 70%, var(--lime) 85%, transparent 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: spin 5s linear infinite; pointer-events: none; }
-  @property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-  @keyframes spin { to { --spin: 360deg; } }
-  @keyframes card-in { to { opacity: 1; transform: none; } }
-  .card h2 { font: 34px/1 'Anton', Impact, sans-serif; margin: 0 0 6px; text-transform: uppercase; }
-  .card .sub { margin: 0 0 22px; color: var(--muted); font-size: 15px; }
-  label { display: block; font: 700 11px 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 7px; color: #cfd2c7; }
-  .field { margin-bottom: 14px; }
-  input[type=text], input[type=email], select { width: 100%; font: 16px 'Space Grotesk', Arial, sans-serif; color: var(--paper); background: rgba(0,0,0,.35); border: 1px solid #3a4336; padding: 13px 14px; border-radius: 0; transition: border-color .2s, box-shadow .2s; }
-  select option { color: #111; }
-  input:focus, select:focus { outline: none; border-color: var(--lime); box-shadow: 0 0 0 4px rgba(183,255,57,.15); }
-  .consent { display: flex; gap: 10px; align-items: flex-start; font: 400 13px/1.45 'Space Grotesk', Arial, sans-serif; text-transform: none; letter-spacing: 0; color: var(--muted); margin: 6px 0 18px; }
-  .consent input { margin-top: 2px; width: 17px; height: 17px; accent-color: var(--lime); flex: none; }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  button.go { position: relative; width: 100%; font: 22px 'Anton', Impact, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--ink); background: var(--lime); border: 0; padding: 16px; cursor: pointer; box-shadow: 5px 5px 0 var(--lime-deep); transition: transform .12s, box-shadow .12s; overflow: hidden; }
-  button.go::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent); animation: shine 3.2s 1.5s infinite; }
-  @keyframes shine { 0% { left: -60%; } 40%,100% { left: 130%; } }
-  button.go:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--lime-deep); }
-  button.go:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--lime-deep); }
-  button.go[disabled] { opacity: .7; cursor: progress; }
-  .msg { margin-top: 12px; min-height: 1.3em; font-size: 14px; }
-  .msg.error { color: var(--error); }
-
-  .success { text-align: center; padding: 10px 0 4px; }
-  .success .ball { width: 74px; height: 74px; margin: 0 auto 14px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #e6e9e2 60%, #c3cabd); box-shadow: 0 10px 24px rgba(0,0,0,.4); animation: bounce 1s cubic-bezier(.3,1.5,.5,1) both; }
-  @keyframes bounce { 0% { transform: translateY(-120px) scale(.7); opacity: 0; } 60% { transform: translateY(8px) scaleY(.9); opacity: 1; } 100% { transform: none; } }
-  .success .pos { font: 72px/1 'Anton', Impact, sans-serif; color: var(--lime); margin: 8px 0; text-shadow: 0 0 40px rgba(183,255,57,.4); }
-  .success h2 { margin-bottom: 4px; }
-  .share { margin-top: 16px; font: 700 12px 'Space Mono', monospace; letter-spacing: 1px; background: none; color: var(--paper); border: 1px solid #4b544a; padding: 10px 16px; cursor: pointer; }
-  .share:hover { border-color: var(--lime); color: var(--lime); }
-
-  .scroll-cue { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font: 11px 'Space Mono', monospace; letter-spacing: 2px; color: var(--muted); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .scroll-cue i { width: 2px; height: 34px; background: linear-gradient(var(--lime), transparent); animation: cue 1.6s infinite; transform-origin: top; }
-  @keyframes cue { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
-
-  .ticker-wrap { overflow: hidden; padding: 14px 0; }
-  .ticker { background: var(--lime); color: var(--ink); overflow: hidden; white-space: nowrap; transform: rotate(-1.2deg); margin: 0 -2%; border-block: 2px solid var(--ink); }
-  .ticker div { display: inline-block; padding: 14px 0; font: 24px 'Anton', Impact, sans-serif; letter-spacing: 2px; animation: marquee 26s linear infinite; }
-  @keyframes marquee { to { transform: translateX(-50%); } }
-
-  section { padding: 100px 5%; max-width: 1240px; margin: 0 auto; }
-  .section-head { max-width: 640px; margin-bottom: 44px; }
-  .section-head h2 { font: clamp(40px, 5.5vw, 72px)/.95 'Anton', Impact, sans-serif; text-transform: uppercase; margin: 12px 0 14px; }
-  .section-head h2 em { font-style: normal; color: var(--lime); }
-  .section-head p { color: var(--muted); margin: 0; font-size: 17px; }
-
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .feature { background: var(--panel); border: 1px solid #263024; padding: 28px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s, opacity .8s; }
-  .feature:hover { transform: translateY(-6px); border-color: var(--lime); }
-  .feature .num { position: absolute; right: 18px; top: 8px; font: 90px/1 'Anton', Impact, sans-serif; color: rgba(183,255,57,.08); }
-  .feature svg { width: 46px; height: 46px; margin-bottom: 18px; }
-  .feature h3 { font: 26px/1.05 'Anton', Impact, sans-serif; text-transform: uppercase; margin: 0 0 8px; letter-spacing: .5px; }
-  .feature p { margin: 0; color: var(--muted); }
-
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: step; }
-  .step { border-top: 2px solid #2c3629; padding-top: 22px; position: relative; }
-  .step::before { counter-increment: step; content: "0" counter(step); font: 54px/1 'Anton', Impact, sans-serif; color: var(--lime); display: block; margin-bottom: 10px; }
-  .step::after { content: ""; position: absolute; top: -2px; left: 0; height: 2px; width: 0; background: var(--lime); transition: width 1.2s .3s cubic-bezier(.2,.8,.2,1); }
-  .step.in::after { width: 100%; }
-  .step h3 { font: 24px 'Anton', Impact, sans-serif; text-transform: uppercase; margin: 0 0 6px; letter-spacing: .5px; }
-  .step p { margin: 0; color: var(--muted); }
-
-  .cta { text-align: center; padding: 110px 5%; background: radial-gradient(60% 80% at 50% 100%, rgba(183,255,57,.16), transparent 70%); }
-  .cta h2 { font: clamp(46px, 7vw, 96px)/.92 'Anton', Impact, sans-serif; text-transform: uppercase; margin: 0 0 28px; }
-  .cta h2 em { font-style: normal; color: var(--lime); }
-  .cta a { display: inline-block; font: 22px 'Anton', Impact, sans-serif; text-transform: uppercase; letter-spacing: 1px; background: var(--lime); color: var(--ink); text-decoration: none; padding: 16px 34px; box-shadow: 5px 5px 0 var(--lime-deep); }
-
-  footer { border-top: 1px solid #222a20; padding: 28px 5%; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: 13px; color: var(--muted); }
-
-  .reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
-  .reveal.in { opacity: 1; transform: none; }
-  .feature.reveal.in:hover { transform: translateY(-6px); }
-
-  #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
-
-  @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; padding-top: 10px; gap: 30px; }
-    .hero::before { background: linear-gradient(180deg, rgba(14,19,16,.45) 0%, rgba(14,19,16,.82) 40%, var(--ink) 100%); }
-    .card { justify-self: stretch; max-width: none; }
-    .features, .steps { grid-template-columns: 1fr; }
-    .scroll-cue { display: none; }
-    section { padding: 70px 5%; }
+  html { scroll-behavior: smooth; scrollbar-color: var(--turf-ink) var(--turf-deep); }
+  body {
+    margin: 0; color: var(--on-turf); font: 400 18px/1.55 var(--text); -webkit-font-smoothing: antialiased;
+    background: var(--turf) repeating-linear-gradient(90deg, var(--turf) 0 160px, var(--turf-2) 160px 320px);
+    font-variant-numeric: tabular-nums;
   }
-  @media (max-width: 480px) { .nav-cta { display: none; } .card { padding: 22px; } }
+  ::selection { background: var(--red); color: #fff; }
+  a { color: inherit; text-underline-offset: 0.2em; }
+  :focus-visible { outline: 3px solid #ffd84d; outline-offset: 3px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+
+  /* Top band */
+  .band { background: var(--turf-deep); border-bottom: 1px solid var(--turf-ink); }
+  .band .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; }
+  .mark { font: 800 26px/1 var(--display); letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
+  .band p { margin: 0; font: 600 15px/1.2 "Barlow Condensed", var(--text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-turf-2); }
+
+  /* The board */
+  .board-zone { padding: clamp(16px, 3vw, 36px) 0 clamp(40px, 6vw, 72px); }
+  .board {
+    background: var(--board); color: var(--ink);
+    border: 10px solid var(--turf-ink); border-radius: 4px;
+    box-shadow: 0 30px 60px -24px rgba(5, 20, 12, 0.7), 0 6px 14px -6px rgba(5, 20, 12, 0.5);
+  }
+  .board-head { background: var(--turf-deep); color: var(--on-turf); display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px clamp(14px, 3vw, 28px); }
+  .board-head strong { font: 800 clamp(18px, 2.4vw, 26px)/1 var(--display); letter-spacing: 0.12em; text-transform: uppercase; }
+  .board-head span { font: 600 15px/1.2 "Barlow Condensed", var(--text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-turf-2); }
+  .board-head b { color: #fff; font-weight: 600; }
+  .board-body { padding: clamp(18px, 3vw, 34px) clamp(14px, 3vw, 40px) clamp(20px, 3vw, 34px); }
+
+  /* Tiles */
+  .tiles { --t: clamp(30px, 6.2vw, 78px); display: flex; flex-wrap: nowrap; gap: calc(var(--t) * 0.08); }
+  .tile {
+    width: calc(var(--t) * 0.78); height: var(--t); display: grid; place-items: center; flex: none;
+    background: var(--plate);
+    border: 1px solid #c3c8bc; border-radius: 3px;
+    box-shadow: 0 2px 3px -1px rgba(10, 30, 18, 0.28);
+    font: 800 calc(var(--t) * 0.8)/1 var(--display); color: var(--ink); text-transform: uppercase;
+    position: relative;
+  }
+  .tile.gap { background: var(--slot); border-color: #cfd4c8; box-shadow: 0 1px 3px rgba(10,30,18,.18) inset; }
+  .tile.red { color: var(--red); }
+  h1 { margin: 0; display: grid; gap: calc(clamp(30px, 6.2vw, 78px) * 0.12); }
+
+  .lead { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: end; }
+  .tiles.narrow { display: none; }
+  .lede { max-width: 46ch; margin: 0; font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); text-wrap: pretty; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  /* Entry section of the board */
+  .cols { display: grid; grid-template-columns: 76px 1fr 150px; gap: 16px; align-items: end; margin-top: clamp(24px, 3vw, 36px); padding: 0 0 8px; border-bottom: 2px solid var(--ink); font: 600 14px/1 "Barlow Condensed", var(--text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
+  .cols span:last-child { text-align: right; }
+  .entry { display: grid; grid-template-columns: 76px 1fr 150px; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .pos { --t: 58px; display: flex; gap: 3px; }
+  .pos .tile { width: 40px; height: 54px; font-size: 44px; }
+  .status { text-align: right; font: 800 22px/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+  .status.on { color: var(--turf); }
+
+  .name-slot { position: relative; }
+  .name-slot input {
+    width: 100%; height: 58px; padding: 0 16px; border-radius: 3px;
+    font: 800 34px/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+    background: var(--plate); border: 1px solid #b9bfb1; box-shadow: 0 2px 4px rgba(10,30,18,.14) inset;
+    caret-color: var(--red); transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  }
+  .name-slot input::placeholder { color: #6f776c; }
+  .name-tiles { --t: 58px; flex-wrap: wrap; row-gap: 6px; }
+  .name-tiles .tile { width: 42px; font-size: 44px; }
+
+  .more { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-top: 18px; }
+  label.f { display: grid; gap: 6px; }
+  label.f > span { font: 600 14px/1 "Barlow Condensed", var(--text); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+  .f input, .f select {
+    width: 100%; height: 52px; padding: 0 14px; border-radius: 3px; font: 500 18px var(--text); color: var(--ink);
+    background: var(--plate); border: 1px solid #b9bfb1; caret-color: var(--red);
+    transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  }
+  .f select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23111512' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+  .board input:focus, .board select:focus { outline: none; border-color: var(--turf); box-shadow: 0 0 0 3px rgba(29, 90, 55, 0.25); }
+  .board input::placeholder { color: #636b61; }
+  .board :focus-visible { outline-color: var(--turf-deep); }
+
+  .consent { display: flex; gap: 12px; align-items: flex-start; margin: 18px 0 0; font-size: 15px; line-height: 1.45; color: var(--ink-2); max-width: 70ch; }
+  .consent input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--turf); flex: none; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 20px; }
+  .post {
+    font: 800 24px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase;
+    color: #fff; background: var(--turf-deep); border: 0; border-radius: 3px; padding: 18px 30px; cursor: pointer;
+    box-shadow: 0 10px 20px -10px rgba(10, 30, 18, 0.7);
+    transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out);
+  }
+  .post:active { transform: scale(0.97); }
+  .post[disabled] { opacity: 0.7; cursor: progress; }
+  @media (hover: hover) and (pointer: fine) { .post:hover { background: var(--turf-ink); } }
+  .msg { font-size: 16px; color: var(--ink-2); min-height: 1.4em; }
+  .msg.error { color: var(--red); font-weight: 500; }
+
+  .posted { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .posted p { margin: 0; font-size: 17px; color: var(--ink-2); max-width: 60ch; }
+  .share { font: 600 15px/1 "Barlow Condensed", var(--text); letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; padding: 12px 16px; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out); }
+  .share:active { transform: scale(0.97); }
+  @media (hover: hover) and (pointer: fine) { .share:hover { background: var(--ink); color: var(--board); } }
+
+  /* Sections on the fairway */
+  section { padding: clamp(56px, 8vw, 104px) 0 0; }
+  h2 { margin: 0 0 14px; font: 800 clamp(40px, 6vw, 76px)/0.95 var(--display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+  .intro { margin: 0 0 30px; max-width: 58ch; color: var(--on-turf-2); font-size: 19px; }
+
+  .card-table { background: var(--board); color: var(--ink); border: 10px solid var(--turf-ink); border-radius: 4px; box-shadow: 0 24px 48px -24px rgba(5, 20, 12, 0.7); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 18px; }
+  th { text-align: left; padding: 14px 20px; background: var(--turf-deep); color: var(--on-turf); font: 600 14px/1 "Barlow Condensed", var(--text); letter-spacing: 0.14em; text-transform: uppercase; }
+  td { padding: 18px 20px; border-top: 1px solid var(--rule); vertical-align: middle; }
+  td:first-child { font: 800 26px/1.15 var(--display); text-transform: uppercase; letter-spacing: 0.02em; width: 34%; }
+  td:last-child { width: 1%; }
+  td .tile { --t: 46px; width: 36px; height: 46px; font-size: 36px; }
+  tr.mystery td:first-child { color: var(--red); }
+
+  .gift { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .gift p { margin: 0 0 16px; color: var(--on-turf-2); font-size: 19px; max-width: 52ch; }
+  .gift strong { color: var(--on-turf); font-weight: 600; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid rgba(241,246,239,.25); }
+  .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid rgba(241,246,239,.25); }
+  .steps b { font: 800 44px/0.9 var(--display); color: #fff; }
+  .steps h3 { margin: 0 0 4px; font: 800 26px/1.15 var(--display); text-transform: uppercase; letter-spacing: 0.03em; }
+  .steps p { margin: 0; font-size: 17px; color: var(--on-turf-2); }
+
+  .last { text-align: center; padding-bottom: clamp(56px, 8vw, 100px); }
+  .last h2 { margin-bottom: 26px; }
+  .last a { display: inline-block; font: 800 24px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--turf-deep); background: var(--board); padding: 18px 30px; border-radius: 3px; box-shadow: 0 12px 24px -12px rgba(5, 20, 12, 0.8); transition: transform 160ms var(--ease-out); }
+  .last a:active { transform: scale(0.97); }
+
+  footer { background: var(--turf-deep); border-top: 1px solid var(--turf-ink); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 22px 0; font-size: 15px; color: var(--on-turf-2); }
+
+  @media (max-width: 1000px) and (min-width: 761px) {
+    .lead { grid-template-columns: 1fr; gap: 20px; }
+  }
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .band p { display: none; }
+    .board { border-width: 6px; }
+    .lead { grid-template-columns: 1fr; gap: 18px; }
+    .tiles.wide { display: none; }
+    .tiles.narrow { display: flex; --t: clamp(40px, 12.5vw, 56px); }
+    .lede { max-width: none; }
+    .cols, .entry { grid-template-columns: 52px 1fr; }
+    .cols span:last-child, .status { display: none; }
+    .pos .tile { width: 30px; height: 44px; font-size: 34px; }
+    .name-slot input { height: 50px; font-size: 28px; }
+    .name-tiles .tile { width: 26px; height: 40px; font-size: 30px; }
+    .name-tiles { gap: 2px; }
+    .more, .gift { grid-template-columns: 1fr; }
+    .post { width: 100%; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    tbody tr { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; padding: 16px; border-top: 1px solid var(--rule); }
+    tbody tr:first-child { border-top: 0; }
+    td { padding: 0; border: 0; }
+    td:first-child { font-size: 24px; width: auto; }
+    td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; margin-top: 6px; font-size: 17px; color: var(--ink-2); }
+    td:last-child { grid-column: 2; grid-row: 1; width: auto; }
+    td .tile { width: 26px; height: 36px; font-size: 28px; }
+  }
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 1ms !important; }
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-bg" role="img" aria-label="A black Bunker Box mystery box with a lime ribbon sitting in a golf bunker at sunset"></div>
-  <div class="glow" aria-hidden="true"></div>
-  <canvas id="sand" aria-hidden="true"></canvas>
-
-  <nav>
-    <a class="brand" href="/" aria-label="Bunker Box home"><span class="brand-mark">B</span>BUNKER<b>BOX</b></a>
-    <a class="nav-cta" href="#join">JOIN THE LIST ↘</a>
-  </nav>
-
-  <div class="hero-inner">
-    <div>
-      <span class="eyebrow"><span class="dot"></span>Golf mystery boxes · Launching soon</span>
-      <h1><span class="line"><span>Golf's best</span></span><span class="line"><span>surprise is in</span></span><span class="line"><span>the bunker.</span></span></h1>
-      <p class="lede">Every Bunker Box is packed with hand-picked golf balls, tees, accessories and at least one thing you won't see coming. Join the waiting list for first access on launch day.</p>
-      <div class="stats">
-        <div class="stat" id="count-stat" hidden><strong id="count">0</strong><span>Golfers on the list</span></div>
-        <div class="stat"><strong>5+</strong><span>Items per box</span></div>
-        <div class="stat"><strong>100%</strong><span>Mystery</span></div>
-      </div>
-    </div>
-
-    <div class="card" id="join">
-      <div id="form-view">
-        <h2>Save your spot</h2>
-        <p class="sub">Be first in line when the boxes drop.</p>
-        <form id="waitlist" novalidate>
-          <div class="field">
-            <label for="name">First name</label>
-            <input id="name" name="name" type="text" autocomplete="given-name" maxlength="80" required>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" maxlength="200" required>
-          </div>
-          <div class="field">
-            <label for="level">How often do you play?</label>
-            <select id="level" name="level">
-              <option value="">Choose one (optional)</option>
-              <option>Every week</option>
-              <option>A few times a month</option>
-              <option>Now and then</option>
-              <option>Just starting out</option>
-              <option>Buying as a gift</option>
-            </select>
-          </div>
-          <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
-          <label class="consent"><input type="checkbox" id="consent" name="consent" required><span>I'm happy for Bunker Box to email me about the launch. We'll only use your details for this.</span></label>
-          <button type="submit" class="go" id="submit">Get on the list</button>
-          <div class="msg" id="msg" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-      <div class="success" id="success-view" hidden>
-        <div class="ball" aria-hidden="true"></div>
-        <h2>You're in!</h2>
-        <div class="pos" id="position"></div>
-        <p class="sub" id="success-text">That's your place in the queue. We'll email you the moment boxes go on sale.</p>
-        <button class="share" id="share" type="button">SHARE WITH A GOLF MATE ↗</button>
-      </div>
-    </div>
+<header class="band">
+  <div class="wrap">
+    <a class="mark" href="/">Bunker Box</a>
+    <p>Golf mystery boxes · On sale before Christmas 2026</p>
   </div>
-
-  <a class="scroll-cue" href="#inside">WHAT'S INSIDE<i></i></a>
 </header>
 
-<div class="ticker-wrap" aria-hidden="true"><div class="ticker"><div>GOLF BALLS ✦ TEES ✦ BALL MARKERS ✦ DIVOT TOOLS ✦ MYSTERY EXTRA ✦ GOLF BALLS ✦ TEES ✦ BALL MARKERS ✦ DIVOT TOOLS ✦ MYSTERY EXTRA ✦ GOLF BALLS ✦ TEES ✦ BALL MARKERS ✦ DIVOT TOOLS ✦ MYSTERY EXTRA ✦ GOLF BALLS ✦ TEES ✦ BALL MARKERS ✦ DIVOT TOOLS ✦ MYSTERY EXTRA ✦ </div></div></div>
+<main>
+  <div class="board-zone">
+    <div class="wrap">
+      <div class="board" id="board">
+        <div class="board-head">
+          <strong>Waiting list</strong>
+          <span id="count-line" hidden><b id="count">0</b> names on the board</span>
+        </div>
+        <div class="board-body">
+          <div class="lead">
+          <h1>
+            <span class="sr-only">What's in the box?</span>
+            <span class="tiles wide" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span><span class="tile gap"></span><span class="tile">I</span><span class="tile">N</span></span><span class="tiles wide" aria-hidden="true"><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span><span class="tile gap"></span><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile">?</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">I</span><span class="tile">N</span><span class="tile gap"></span><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile">?</span></span>
+          </h1>
+          <p class="lede">Golf balls, tees, accessories and <strong>at least one thing you won't see coming</strong>. Nobody knows what's inside until it's opened. Boxes go on sale before Christmas 2026, for you or for the golfer you're buying for.</p>
+          </div>
 
-<section id="inside">
-  <div class="section-head reveal">
-    <span class="eyebrow">What's in the box</span>
-    <h2>Packed for the <em>course.</em></h2>
-    <p>Every box is different, and each one holds more than you paid for.</p>
-  </div>
-  <div class="features">
-    <div class="feature reveal"><span class="num">01</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="#b7ff39" stroke-width="2.5" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g fill="#b7ff39" stroke="none"><circle cx="18" cy="19" r="1.8"/><circle cx="26" cy="15" r="1.8"/><circle cx="31" cy="23" r="1.8"/><circle cx="22" cy="27" r="1.8"/><circle cx="16" cy="31" r="1.8"/><circle cx="28" cy="32" r="1.8"/></g></svg>
-      <h3>Quality golf balls</h3><p>A mix of top brands, from tour-level balls to reliable everyday ones.</p></div>
-    <div class="feature reveal"><span class="num">02</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="#b7ff39" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M14 6v36"/><path d="M14 8l20 8-20 8"/></svg>
-      <h3>Tees &amp; accessories</h3><p>Tees, ball markers, divot tools and other bits for your bag.</p></div>
-    <div class="feature reveal"><span class="num">03</span>
-      <svg viewBox="0 0 48 48" fill="none" stroke="#b7ff39" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="18" width="34" height="24"/><path d="M7 26h34M24 18v24"/><path d="M24 18c-4-8-12-8-12-2s12 2 12 2 12 4 12-2-8-6-12 2"/></svg>
-      <h3>A mystery surprise</h3><p>Every box has at least one extra you won't see coming.</p></div>
-  </div>
-</section>
+          <form id="waitlist" novalidate>
+            <div class="cols" aria-hidden="true"><span>Pos</span><span>Name</span><span>Status</span></div>
+            <div class="entry">
+              <div class="pos" id="pos" aria-hidden="true"><span class="tile red">?</span></div>
+              <div class="name-slot">
+                <label class="sr-only" for="name">First name</label>
+                <input id="name" name="name" type="text" autocomplete="given-name" maxlength="80" placeholder="Your first name" required>
+                <div class="tiles name-tiles" id="name-tiles" hidden aria-hidden="true"></div>
+              </div>
+              <div class="status" id="status" aria-hidden="true">Not yet</div>
+            </div>
 
-<section>
-  <div class="section-head reveal">
-    <span class="eyebrow">How it works</span>
-    <h2>Three steps to <em>tee off.</em></h2>
-  </div>
-  <div class="steps">
-    <div class="step reveal"><h3>Join the list</h3><p>Pop your email in. It takes ten seconds.</p></div>
-    <div class="step reveal"><h3>Get early access</h3><p>People on the list hear about launch day first.</p></div>
-    <div class="step reveal"><h3>Open your box</h3><p>Order, unbox, and find out what's inside.</p></div>
-  </div>
-</section>
+            <div id="form-extra">
+              <div class="more">
+                <label class="f"><span>Email</span>
+                  <input id="email" name="email" type="email" autocomplete="email" maxlength="200" placeholder="you@example.com" required>
+                </label>
+                <label class="f"><span>How often do you play?</span>
+                  <select id="level" name="level">
+                    <option value="">Choose one (optional)</option>
+                    <option>Every week</option>
+                    <option>A few times a month</option>
+                    <option>Now and then</option>
+                    <option>Just starting out</option>
+                    <option>Buying as a gift</option>
+                  </select>
+                </label>
+              </div>
+              <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="consent"><input type="checkbox" id="consent" name="consent" required><span>I'm happy for Bunker Box to email me about the launch. We'll only use your details for this.</span></label>
+              <div class="actions">
+                <button type="submit" class="post" id="submit">Post my name</button>
+                <div class="msg" id="msg" role="status" aria-live="polite"></div>
+              </div>
+            </div>
 
-<div class="cta reveal">
-  <h2>Don't get left<br>in the <em>bunker.</em></h2>
-  <a href="#join">Join the waiting list</a>
-</div>
+            <div class="posted" id="posted" hidden>
+              <p id="posted-text">You're on the board. We'll email you before boxes go on sale, in time for Christmas.</p>
+              <button class="share" id="share" type="button">Send to a golf mate</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="inside">
+    <div class="wrap">
+      <h2>What's in the box</h2>
+      <p class="intro">Every box is different. This much we can tell you.</p>
+      <div class="card-table">
+        <table>
+          <thead><tr><th scope="col">In every box</th><th scope="col">What to expect</th><th scope="col"><span class="sr-only">Known?</span></th></tr></thead>
+          <tbody>
+            <tr><td>Golf balls</td><td>A mix of brands, from tour-level balls to reliable everyday ones.</td><td><span class="tile" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></td></tr>
+            <tr><td>Tees &amp; accessories</td><td>Tees, ball markers, divot tools and other bits for the bag.</td><td><span class="tile" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></td></tr>
+            <tr class="mystery"><td>The surprise</td><td>At least one extra you won't see coming. That's the point.</td><td><span class="tile red" role="img" aria-label="Unknown">?</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="gift">
+    <div class="wrap gift">
+      <div>
+        <h2>Buying for a golfer?</h2>
+        <p>Golfers are hard to buy for. They already own the clubs, and they lose balls faster than anyone can keep up. A Bunker Box is a present they'll actually use, with a surprise they didn't pick themselves.</p>
+        <p><strong>Boxes go on sale before Christmas 2026.</strong> Join the list and we'll email you before launch, so you can order in time.</p>
+      </div>
+      <ol class="steps">
+        <li><b>1</b><div><h3>Post your name</h3><p>Join the waiting list. It takes ten seconds.</p></div></li>
+        <li><b>2</b><div><h3>Hear first</h3><p>We email the list before boxes go on sale.</p></div></li>
+        <li><b>3</b><div><h3>Open it</h3><p>Order, unbox, and find out what's inside.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="last">
+    <div class="wrap">
+      <h2>Get your name on the board</h2>
+      <a href="#board">Join the waiting list</a>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <span>© <span id="year"></span> Bunker Box</span>
-  <span>Golf mystery boxes. Hero image made with Higgsfield.</span>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Bunker Box</span>
+    <span>We only use your email to tell you about the launch.</span>
+  </div>
 </footer>
-
-<canvas id="confetti" aria-hidden="true"></canvas>
 
 <script>
   const $ = s => document.querySelector(s);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
   $("#year").textContent = new Date().getFullYear();
 
-  (() => {
-    const c = $("#sand"), x = c.getContext("2d");
-    let w, h, dpr, grains = [];
-    function size() {
-      dpr = Math.min(2, devicePixelRatio || 1);
-      w = c.width = c.offsetWidth * dpr; h = c.height = c.offsetHeight * dpr;
-      grains = Array.from({ length: Math.round(w * h / (9000 * dpr * dpr)) }, () => ({ x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 1.6 + .4) * dpr, vx: (Math.random() * .35 + .1) * dpr, vy: (Math.random() - .6) * .25 * dpr, a: Math.random() * .6 + .2, t: Math.random() * 6 }));
-    }
-    function tick() {
-      x.clearRect(0, 0, w, h);
-      for (const g of grains) {
-        g.t += .02; g.x += g.vx; g.y += g.vy + Math.sin(g.t) * .15 * dpr;
-        if (g.x > w + 5) g.x = -5; if (g.y < -5) g.y = h + 5; if (g.y > h + 5) g.y = -5;
-        x.globalAlpha = g.a * (.6 + .4 * Math.sin(g.t * 1.7));
-        x.fillStyle = g.r > 1.5 * dpr ? "#b7ff39" : "#f0dca8";
-        x.beginPath(); x.arc(g.x, g.y, g.r, 0, 6.283); x.fill();
-      }
-      requestAnimationFrame(tick);
-    }
-    size(); addEventListener("resize", size);
-    if (!reduced) tick();
-  })();
-
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .15 });
-  document.querySelectorAll(".reveal").forEach((el, i) => { el.style.transitionDelay = (i % 3) * 90 + "ms"; io.observe(el); });
-
-  function countUp(el, to) {
-    if (to < 5) return;
-    $("#count-stat").hidden = false;
-    if (reduced) { el.textContent = to.toLocaleString(); return; }
-    const start = performance.now(), from = Number(el.dataset.n || 0);
-    el.dataset.n = to;
-    (function step(now) {
-      const p = Math.min(1, (now - start) / 1400), e = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(from + (to - from) * e).toLocaleString();
-      if (p < 1) requestAnimationFrame(step);
-    })(start);
+  function makeTiles(text, cls = "") {
+    return [...text].map(ch => {
+      const t = document.createElement("span");
+      t.className = "tile" + (ch === " " ? " gap" : "") + (cls ? " " + cls : "");
+      t.textContent = ch === " " ? "" : ch;
+      return t;
+    });
   }
-  fetch("/api/join").then(r => r.ok ? r.json() : null).then(d => d && typeof d.count === "number" && countUp($("#count"), d.count)).catch(() => {});
 
-  function celebrate() {
-    if (reduced) return;
-    const c = $("#confetti"), x = c.getContext("2d"), dpr = Math.min(2, devicePixelRatio || 1);
-    c.width = innerWidth * dpr; c.height = innerHeight * dpr;
-    const bits = Array.from({ length: 90 }, () => ({ x: Math.random() * c.width, y: -Math.random() * c.height * .5, vy: (Math.random() * 3 + 2) * dpr, vx: (Math.random() - .5) * 2 * dpr, r: (Math.random() * 6 + 4) * dpr, ball: Math.random() < .35, col: ["#b7ff39", "#f0dca8", "#ffffff", "#7db327"][Math.floor(Math.random() * 4)], rot: Math.random() * 6 }));
-    const end = performance.now() + 3200;
-    (function frame(now) {
-      x.clearRect(0, 0, c.width, c.height);
-      for (const b of bits) {
-        b.vy += .08 * dpr; b.x += b.vx; b.y += b.vy; b.rot += .1;
-        if (b.y > c.height - b.r && b.vy > 0) { b.vy *= -.45; b.y = c.height - b.r; }
-        if (b.ball) { x.fillStyle = "#fff"; x.beginPath(); x.arc(b.x, b.y, b.r * 1.3, 0, 6.283); x.fill(); }
-        else { x.save(); x.translate(b.x, b.y); x.rotate(b.rot); x.fillStyle = b.col; x.fillRect(-b.r / 2, -b.r / 4, b.r, b.r / 2); x.restore(); }
+  // Plates slot into the board: drop a few pixels into place, out of a slight blur.
+  function slotIn(tiles, { delay = 0, step = 28, distance = 0.28 } = {}) {
+    tiles.forEach((t, i) => {
+      if (reduced) {
+        t.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: delay + i * 10, fill: "backwards" });
+        return;
       }
-      if (now < end) requestAnimationFrame(frame); else x.clearRect(0, 0, c.width, c.height);
-    })(performance.now());
+      t.animate(
+        [
+          { transform: `translateY(-${distance * 100}%)`, opacity: 0, filter: "blur(3px)" },
+          { transform: "translateY(0)", opacity: 1, filter: "blur(0)" }
+        ],
+        { duration: 520, delay: delay + i * step, easing: EASE, fill: "backwards" }
+      );
+    });
   }
+
+  // Board is set on load.
+  document.fonts.ready.then(() => {
+    const rows = [...document.querySelectorAll("h1 .tiles")].filter(r => r.offsetParent);
+    rows.forEach((row, r) => slotIn([...row.children], { delay: 120 + r * 220 }));
+  });
+
+  // Names-on-the-board counter, shown once there are enough to be worth showing.
+  fetch("/api/join").then(r => r.ok ? r.json() : null).then(d => {
+    if (d && typeof d.count === "number" && d.count >= 5) { $("#count").textContent = d.count.toLocaleString(); $("#count-line").hidden = false; }
+  }).catch(() => {});
 
   const form = $("#waitlist"), msg = $("#msg"), submit = $("#submit");
-  function fail(t) { msg.textContent = t; msg.className = "msg error"; }
+  function fail(text, field) {
+    msg.textContent = text; msg.className = "msg error";
+    if (field) field.focus();
+    if (!reduced) $("#board").animate([{ transform: "translateX(0)" }, { transform: "translateX(-4px)" }, { transform: "translateX(3px)" }, { transform: "translateX(0)" }], { duration: 260, easing: "ease-out" });
+  }
+
+  function postToBoard(name, position, existing) {
+    const nameTiles = $("#name-tiles");
+    const label = name.toUpperCase().replace(/[^A-Z' -]/g, "").slice(0, 12) || "YOU";
+    nameTiles.replaceChildren(...makeTiles(label));
+    $("#name").hidden = true;
+    nameTiles.hidden = false;
+    const pos = $("#pos");
+    pos.replaceChildren(...makeTiles(position ? String(position) : "IN", "red"));
+    const status = $("#status");
+    status.textContent = existing ? "Already on" : "On the list";
+    status.classList.add("on");
+    $("#form-extra").hidden = true;
+    $("#posted").hidden = false;
+    if (existing) $("#posted-text").textContent = "That email was already on the board, so your place is saved. We'll email you before boxes go on sale.";
+    slotIn([...nameTiles.children], { step: 45, distance: 0.45 });
+    slotIn([...pos.children], { delay: nameTiles.children.length * 45 + 120, step: 60, distance: 0.45 });
+    if (!reduced) status.animate([{ opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0)" }], { duration: 400, delay: nameTiles.children.length * 45 + 300, easing: EASE, fill: "backwards" });
+    $("#share").focus({ preventScroll: true });
+  }
+
   form.addEventListener("submit", async e => {
     e.preventDefault();
     msg.textContent = ""; msg.className = "msg";
     const data = Object.fromEntries(new FormData(form));
     data.consent = form.consent.checked;
-    if (!data.name.trim()) return fail("Please enter your first name.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return fail("Please enter a valid email address.");
-    if (!data.consent) return fail("Please tick the box so we can email you.");
-    submit.disabled = true; submit.textContent = "Saving…";
+    if (!data.name.trim()) return fail("Add your first name so we can post it on the board.", $("#name"));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return fail("That email doesn't look right. Check it and try again.", $("#email"));
+    if (!data.consent) return fail("Tick the box so we're allowed to email you about the launch.", $("#consent"));
+    submit.disabled = true; submit.textContent = "Posting…";
     try {
       const res = await fetch("/api/join", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       const out = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(out.error || "Something went wrong. Please try again.");
-      $("#form-view").hidden = true;
-      $("#success-view").hidden = false;
-      $("#position").textContent = out.position ? "#" + out.position : "";
-      if (!out.position) $("#success-text").textContent = "We'll email you the moment boxes go on sale.";
-      if (out.existing) $("#success-text").textContent = "You'd already signed up with that email, so your spot is saved.";
-      if (typeof out.count === "number") countUp($("#count"), out.count);
-      celebrate();
+      if (!res.ok) throw new Error(out.error || "We couldn't post your name just now. Try again in a minute.");
+      postToBoard(data.name.trim(), out.position, out.existing);
+      if (typeof out.count === "number" && out.count >= 5) { $("#count").textContent = out.count.toLocaleString(); $("#count-line").hidden = false; }
     } catch (err) {
       fail(err.message);
     } finally {
-      submit.disabled = false; submit.textContent = "Get on the list";
+      submit.disabled = false; submit.textContent = "Post my name";
     }
   });
 
   $("#share").addEventListener("click", async () => {
-    const share = { title: "Bunker Box", text: "Golf mystery boxes are coming. Get on the waiting list:", url: location.origin };
+    const share = { title: "Bunker Box", text: "Golf mystery boxes, on sale before Christmas. Get on the waiting list:", url: location.origin };
     try {
       if (navigator.share) await navigator.share(share);
-      else { await navigator.clipboard.writeText(share.url); $("#share").textContent = "LINK COPIED ✓"; }
+      else { await navigator.clipboard.writeText(share.url); $("#share").textContent = "Link copied"; }
     } catch {}
   });
 </script>
