@@ -36,6 +36,7 @@ Boxes go on sale before Christmas 2026. Until then the only action is joining th
 ## Brand Commitments
 
 - Name: Bunker Box.
+- Bunker Box is a Young Enterprise company run by a team of S5 pupils at George Watson's College, Edinburgh. The site says so.
 - Launch timing wording: "before Christmas 2026".
 
 ## Evidence on Hand
