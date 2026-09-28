@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bunker Box — Get your name on the board</title>
 <meta name="description" content="Bunker Box golf mystery boxes go on sale before Christmas 2026. Join the waiting list for first access.">
 <meta name="theme-color" content="#123d27">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Bunker Box — What's in the box?">
 <meta property="og:description" content="Golf mystery boxes, on sale before Christmas 2026. Get your name on the board.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%23123d27'/><rect x='10' y='14' width='44' height='36' rx='3' fill='%23f4f5f0'/><text x='32' y='43' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%23c4122f'>?</text></svg>">
+<meta property="og:image" content="/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -23,6 +29,7 @@
     --turf-2: #21633d;
     --turf-deep: #123d27;
     --turf-ink: #0b2718;
+    --green: #2b7a4b;
     --board: #f4f5f0;
     --plate: #fbfcf8;
     --slot: #dfe3da;
@@ -33,29 +40,31 @@
     --on-turf: #f1f6ef;
     --on-turf-2: #c3dccb;
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --display: "Big Shoulders", "Barlow Condensed", sans-serif;
     --text: "Barlow", system-ui, sans-serif;
+    --stripe: 160px;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  html { scroll-behavior: smooth; scrollbar-color: var(--turf-ink) var(--turf-deep); }
+  html { scroll-behavior: smooth; scrollbar-color: var(--turf-ink) var(--turf-deep); -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; color: var(--on-turf); font: 400 18px/1.55 var(--text); -webkit-font-smoothing: antialiased;
-    background: var(--turf) repeating-linear-gradient(90deg, var(--turf) 0 160px, var(--turf-2) 160px 320px);
-    font-variant-numeric: tabular-nums;
+    background: var(--turf) repeating-linear-gradient(90deg, var(--turf) 0 var(--stripe), var(--turf-2) var(--stripe) calc(var(--stripe) * 2));
+    font-variant-numeric: tabular-nums; -webkit-tap-highlight-color: transparent;
   }
   ::selection { background: var(--red); color: #fff; }
   a { color: inherit; text-underline-offset: 0.2em; }
   :focus-visible { outline: 3px solid #ffd84d; outline-offset: 3px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+  .wrap { width: min(1180px, 100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); margin-inline: auto; }
 
   /* Top band */
-  .band { background: var(--turf-deep); border-bottom: 1px solid var(--turf-ink); }
+  .band { background: var(--turf-deep); border-bottom: 1px solid var(--turf-ink); padding-top: env(safe-area-inset-top); }
   .band .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; }
-  .mark { font: 800 26px/1 var(--display); letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
+  .mark { display: flex; align-items: center; gap: 10px; font: 800 26px/1 var(--display); letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
+  .mark-plate { width: 22px; height: 28px; display: grid; place-items: center; background: var(--plate); color: var(--red); border-radius: 2px; font-size: 22px; letter-spacing: 0; }
   .band p { margin: 0; font: 600 15px/1.2 "Barlow Condensed", var(--text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-turf-2); }
+  .band .short { display: none; }
 
   /* The board */
   .board-zone { padding: clamp(16px, 3vw, 36px) 0 clamp(40px, 6vw, 72px); }
@@ -70,44 +79,55 @@
   .board-head b { color: #fff; font-weight: 600; }
   .board-body { padding: clamp(18px, 3vw, 34px) clamp(14px, 3vw, 40px) clamp(20px, 3vw, 34px); }
 
-  /* Tiles */
-  .tiles { --t: clamp(30px, 6.2vw, 78px); display: flex; flex-wrap: nowrap; gap: calc(var(--t) * 0.08); }
+  /* Plates */
+  .tiles { --t: clamp(30px, 6.2vw, 78px); display: flex; flex-wrap: nowrap; gap: calc(var(--t) * 0.08); perspective: 600px; }
   .tile {
     width: calc(var(--t) * 0.78); height: var(--t); display: grid; place-items: center; flex: none;
-    background: var(--plate);
-    border: 1px solid #c3c8bc; border-radius: 3px;
+    background: var(--plate); border: 1px solid #c3c8bc; border-radius: 3px;
     box-shadow: 0 2px 3px -1px rgba(10, 30, 18, 0.28);
     font: 800 calc(var(--t) * 0.8)/1 var(--display); color: var(--ink); text-transform: uppercase;
     position: relative;
   }
   .tile.gap { background: var(--slot); border-color: #cfd4c8; box-shadow: 0 1px 3px rgba(10,30,18,.18) inset; }
   .tile.red { color: var(--red); }
-  h1 { margin: 0; display: grid; gap: calc(clamp(30px, 6.2vw, 78px) * 0.12); }
+  h1 { margin: 0; display: grid; gap: 10px; }
 
   .lead { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: end; }
   .tiles.narrow { display: none; }
   .lede { max-width: 46ch; margin: 0; font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); text-wrap: pretty; }
   .lede strong { color: var(--ink); font-weight: 600; }
 
-  /* Entry section of the board */
+  /* Entry row */
   .cols { display: grid; grid-template-columns: 76px 1fr 150px; gap: 16px; align-items: end; margin-top: clamp(24px, 3vw, 36px); padding: 0 0 8px; border-bottom: 2px solid var(--ink); font: 600 14px/1 "Barlow Condensed", var(--text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
   .cols span:last-child { text-align: right; }
-  .entry { display: grid; grid-template-columns: 76px 1fr 150px; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
-  .pos { --t: 58px; display: flex; gap: 3px; }
-  .pos .tile { width: 40px; height: 54px; font-size: 44px; }
+  .entry { display: grid; grid-template-columns: minmax(76px, max-content) 1fr 150px; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .pos { --t: 54px; display: flex; gap: 3px; }
+  .pos .tile { width: 40px; }
   .status { text-align: right; font: 800 22px/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
   .status.on { color: var(--turf); }
 
-  .name-slot { position: relative; }
-  .name-slot input {
-    width: 100%; height: 58px; padding: 0 16px; border-radius: 3px;
-    font: 800 34px/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+  .name-slot {
+    --nt: 44px; position: relative; height: 58px; border-radius: 3px;
     background: var(--plate); border: 1px solid #b9bfb1; box-shadow: 0 2px 4px rgba(10,30,18,.14) inset;
-    caret-color: var(--red); transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+    transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), background-color 200ms var(--ease-out);
   }
+  .name-slot:focus-within { border-color: var(--turf); box-shadow: 0 2px 4px rgba(10,30,18,.14) inset, 0 0 0 3px rgba(29, 90, 55, 0.25); }
+  .name-slot input {
+    position: absolute; inset: 0; width: 100%; height: 100%; padding: 0 16px; border: 0; border-radius: 3px; background: transparent;
+    font: 800 34px/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase;
+    color: transparent; caret-color: transparent; outline: none;
+  }
+  .name-slot input::selection { background: transparent; }
   .name-slot input::placeholder { color: #6f776c; }
-  .name-tiles { --t: 58px; flex-wrap: wrap; row-gap: 6px; }
-  .name-tiles .tile { width: 42px; font-size: 44px; }
+  .name-slot input:focus::placeholder { color: transparent; }
+  .name-slot input:-webkit-autofill { -webkit-text-fill-color: transparent; box-shadow: 0 0 0 100px var(--plate) inset; }
+  .typed { --t: var(--nt); position: absolute; inset: 0; padding: 0 12px; align-items: center; pointer-events: none; overflow: hidden; }
+  .typed .cursor { display: none; background: transparent; border-style: dashed; border-color: #b9bfb1; box-shadow: none; }
+  .typed .cursor::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 14%; height: 3px; border-radius: 1px; background: var(--red); animation: blink 1s steps(2, start) infinite; }
+  .name-slot:focus-within .cursor { display: grid; }
+  .name-slot.locked { background: transparent; border-color: transparent; box-shadow: none; }
+  .name-slot.locked .typed { padding: 0; }
+  @keyframes blink { to { visibility: hidden; } }
 
   .more { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-top: 18px; }
   label.f { display: grid; gap: 6px; }
@@ -117,84 +137,125 @@
     background: var(--plate); border: 1px solid #b9bfb1; caret-color: var(--red);
     transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
   }
-  .f select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23111512' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
-  .board input:focus, .board select:focus { outline: none; border-color: var(--turf); box-shadow: 0 0 0 3px rgba(29, 90, 55, 0.25); }
-  .board input::placeholder { color: #636b61; }
+  .f select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23111512' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+  .board .f input:focus, .board select:focus { outline: none; border-color: var(--turf); box-shadow: 0 0 0 3px rgba(29, 90, 55, 0.25); }
+  .board .f input::placeholder { color: #636b61; }
   .board :focus-visible { outline-color: var(--turf-deep); }
 
-  .consent { display: flex; gap: 12px; align-items: flex-start; margin: 18px 0 0; font-size: 15px; line-height: 1.45; color: var(--ink-2); max-width: 70ch; }
-  .consent input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--turf); flex: none; }
+  .consent { display: flex; gap: 12px; align-items: flex-start; margin: 18px 0 0; font-size: 15px; line-height: 1.45; color: var(--ink-2); max-width: 70ch; cursor: pointer; }
+  .consent input { width: 22px; height: 22px; margin: 0; accent-color: var(--turf); flex: none; }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 20px; }
-  .post {
-    font: 800 24px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase;
-    color: #fff; background: var(--turf-deep); border: 0; border-radius: 3px; padding: 18px 30px; cursor: pointer;
+  .post, .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    font: 800 24px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    color: #fff; background: var(--turf-deep); border: 0; border-radius: 3px; padding: 18px 26px 18px 30px; cursor: pointer;
     box-shadow: 0 10px 20px -10px rgba(10, 30, 18, 0.7);
     transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out);
   }
-  .post:active { transform: scale(0.97); }
+  .arrow { width: 22px; height: 22px; flex: none; transition: transform 200ms var(--ease-out); }
+  .post:active, .cta:active, .share:active { transform: scale(0.97); }
   .post[disabled] { opacity: 0.7; cursor: progress; }
-  @media (hover: hover) and (pointer: fine) { .post:hover { background: var(--turf-ink); } }
+  @media (hover: hover) and (pointer: fine) {
+    .post:hover { background: var(--turf-ink); }
+    .post:hover .arrow, .cta:hover .arrow { transform: translateX(4px); }
+    .cta:hover { background: #fff; }
+  }
   .msg { font-size: 16px; color: var(--ink-2); min-height: 1.4em; }
   .msg.error { color: var(--red); font-weight: 500; }
 
   .posted { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
   .posted p { margin: 0; font-size: 17px; color: var(--ink-2); max-width: 60ch; }
-  .share { font: 600 15px/1 "Barlow Condensed", var(--text); letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; padding: 12px 16px; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out); }
-  .share:active { transform: scale(0.97); }
+  .share { font: 600 15px/1 "Barlow Condensed", var(--text); letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; padding: 14px 18px; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) { .share:hover { background: var(--ink); color: var(--board); } }
 
   /* Sections on the fairway */
-  section { padding: clamp(56px, 8vw, 104px) 0 0; }
-  h2 { margin: 0 0 14px; font: 800 clamp(40px, 6vw, 76px)/0.95 var(--display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+  section { padding: clamp(64px, 8vw, 104px) 0 0; }
+  h2 { margin: 0 0 14px; font: 800 clamp(44px, 6vw, 76px)/0.95 var(--display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
   .intro { margin: 0 0 30px; max-width: 58ch; color: var(--on-turf-2); font-size: 19px; }
 
-  .card-table { background: var(--board); color: var(--ink); border: 10px solid var(--turf-ink); border-radius: 4px; box-shadow: 0 24px 48px -24px rgba(5, 20, 12, 0.7); overflow-x: auto; }
+  .card-table { background: var(--board); color: var(--ink); border: 10px solid var(--turf-ink); border-radius: 4px; box-shadow: 0 24px 48px -24px rgba(5, 20, 12, 0.7); overflow: hidden; }
   table { width: 100%; border-collapse: collapse; font-size: 18px; }
   th { text-align: left; padding: 14px 20px; background: var(--turf-deep); color: var(--on-turf); font: 600 14px/1 "Barlow Condensed", var(--text); letter-spacing: 0.14em; text-transform: uppercase; }
   td { padding: 18px 20px; border-top: 1px solid var(--rule); vertical-align: middle; }
   td:first-child { font: 800 26px/1.15 var(--display); text-transform: uppercase; letter-spacing: 0.02em; width: 34%; }
   td:last-child { width: 1%; }
-  td .tile { --t: 46px; width: 36px; height: 46px; font-size: 36px; }
+  td .tiles { --t: 46px; }
   tr.mystery td:first-child { color: var(--red); }
 
   .gift { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
   .gift p { margin: 0 0 16px; color: var(--on-turf-2); font-size: 19px; max-width: 52ch; }
   .gift strong { color: var(--on-turf); font-weight: 600; }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid rgba(241,246,239,.25); }
-  .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid rgba(241,246,239,.25); }
-  .steps b { font: 800 44px/0.9 var(--display); color: #fff; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid rgba(241,246,239,.25); }
+  .steps li { display: grid; grid-template-columns: 60px 1fr; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(241,246,239,.25); }
+  .steps .tiles { --t: 52px; }
   .steps h3 { margin: 0 0 4px; font: 800 26px/1.15 var(--display); text-transform: uppercase; letter-spacing: 0.03em; }
   .steps p { margin: 0; font-size: 17px; color: var(--on-turf-2); }
 
-  .last { text-align: center; padding-bottom: clamp(56px, 8vw, 100px); }
-  .last h2 { margin-bottom: 26px; }
-  .last a { display: inline-block; font: 800 24px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--turf-deep); background: var(--board); padding: 18px 30px; border-radius: 3px; box-shadow: 0 12px 24px -12px rgba(5, 20, 12, 0.8); transition: transform 160ms var(--ease-out); }
-  .last a:active { transform: scale(0.97); }
+  .last { text-align: center; padding-bottom: clamp(64px, 8vw, 100px); }
+  .last h2 { margin-bottom: 8px; }
+  .putt { width: min(520px, 100%); margin: 0 auto 18px; }
+  .putt svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .cta { color: var(--turf-deep); background: var(--board); box-shadow: 0 12px 24px -12px rgba(5, 20, 12, 0.8); }
 
-  footer { background: var(--turf-deep); border-top: 1px solid var(--turf-ink); }
+  footer { background: var(--turf-deep); border-top: 1px solid var(--turf-ink); padding-bottom: env(safe-area-inset-bottom); }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 22px 0; font-size: 15px; color: var(--on-turf-2); }
+
+  /* Phone dock */
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: none;
+    padding: 10px max(16px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    background: var(--turf-deep); border-top: 1px solid var(--turf-ink); box-shadow: 0 -12px 24px -12px rgba(5, 20, 12, 0.6);
+    transform: translateY(110%); transition: transform 220ms cubic-bezier(0.4, 0, 1, 1); }
+  .dock.show { transform: none; transition: transform 320ms var(--ease-out); }
+  .dock .post { width: 100%; color: var(--turf-deep); background: var(--board); box-shadow: none; padding: 16px; font-size: 22px; }
+
+  /* Scroll reveals (only once the script is running) */
+  .js [data-reveal] { opacity: 0; transform: translateY(16px); filter: blur(4px); transition: opacity 600ms var(--ease-out) var(--d, 0ms), transform 700ms var(--ease-out) var(--d, 0ms), filter 600ms var(--ease-out) var(--d, 0ms); }
+  .js [data-reveal].in { opacity: 1; transform: none; filter: none; }
+  .js h2[data-reveal] { opacity: 1; filter: none; transform: none; transition: none; }
+  .js h2[data-reveal] .rv { display: block; transform: translateY(0.35em); clip-path: inset(0 0 100% 0); transition: clip-path 800ms var(--ease-out) var(--d, 0ms), transform 800ms var(--ease-out) var(--d, 0ms); }
+  .js h2[data-reveal].in .rv { transform: none; clip-path: inset(0 0 0 0); }
 
   @media (max-width: 1000px) and (min-width: 761px) {
     .lead { grid-template-columns: 1fr; gap: 20px; }
   }
   @media (max-width: 760px) {
+    :root { --stripe: 72px; }
     body { font-size: 17px; }
-    .band p { display: none; }
+    .band .long { display: none; }
+    .band .short { display: inline; }
+    .band .wrap { min-height: 54px; }
+    .mark { font-size: 24px; }
+    .board-zone { padding-top: 14px; }
     .board { border-width: 6px; }
-    .lead { grid-template-columns: 1fr; gap: 18px; }
+    .board-head { padding: 10px 14px; }
+    .board-head span { font-size: 13px; }
+    .board-body { padding: 18px 14px 20px; }
+    .lead { grid-template-columns: 1fr; gap: 16px; }
+    h1 { gap: 7px; }
     .tiles.wide { display: none; }
-    .tiles.narrow { display: flex; --t: clamp(40px, 12.5vw, 56px); }
-    .lede { max-width: none; }
-    .cols, .entry { grid-template-columns: 52px 1fr; }
+    .tiles.narrow { display: flex; --t: clamp(40px, calc((100vw - 72px) / 5.1), 68px); }
+    .lede { max-width: none; font-size: 17px; }
+    .cols { grid-template-columns: 44px 1fr; gap: 12px; }
+    .entry { grid-template-columns: minmax(44px, max-content) 1fr; gap: 12px; }
+    .pos.multi { --t: 44px; }
+    .pos.multi .tile { width: 28px; }
+    .cols { margin-top: 22px; }
     .cols span:last-child, .status { display: none; }
-    .pos .tile { width: 30px; height: 44px; font-size: 34px; }
-    .name-slot input { height: 50px; font-size: 28px; }
-    .name-tiles .tile { width: 26px; height: 40px; font-size: 30px; }
-    .name-tiles { gap: 2px; }
+    .pos { --t: 48px; }
+    .pos .tile { width: 32px; }
+    .name-slot { --nt: 34px; height: 52px; }
+    .name-slot input { font-size: 26px; padding: 0 12px; }
+    .typed { padding: 0 9px; }
     .more, .gift { grid-template-columns: 1fr; }
     .post { width: 100%; }
+    .share { width: 100%; }
+    .dock { display: block; }
+    footer .wrap { padding-bottom: 90px; }
+    h2 { font-size: clamp(40px, 12vw, 52px); }
+    .intro, .gift p { font-size: 17px; }
+    .card-table { border-width: 6px; }
     thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     tbody tr { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; padding: 16px; border-top: 1px solid var(--rule); }
     tbody tr:first-child { border-top: 0; }
@@ -202,11 +263,17 @@
     td:first-child { font-size: 24px; width: auto; }
     td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; margin-top: 6px; font-size: 17px; color: var(--ink-2); }
     td:last-child { grid-column: 2; grid-row: 1; width: auto; }
-    td .tile { width: 26px; height: 36px; font-size: 28px; }
+    td .tiles { --t: 38px; }
+    .steps li { grid-template-columns: 48px 1fr; gap: 14px; }
+    .steps .tiles { --t: 44px; }
+    .steps h3 { font-size: 24px; }
+    .cta { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition-duration: 1ms !important; }
+    .typed .cursor::after { animation: none; }
+    .js [data-reveal], .js h2[data-reveal] .rv { opacity: 1; transform: none; filter: none; clip-path: none; }
   }
 </style>
 </head>
@@ -214,8 +281,8 @@
 
 <header class="band">
   <div class="wrap">
-    <a class="mark" href="/">Bunker Box</a>
-    <p>Golf mystery boxes · On sale before Christmas 2026</p>
+    <a class="mark" href="/"><span class="mark-plate" aria-hidden="true">?</span>Bunker Box</a>
+    <p><span class="long">Golf mystery boxes · On sale before Christmas 2026</span><span class="short">Before Christmas 2026</span></p>
   </div>
 </header>
 
@@ -229,21 +296,21 @@
         </div>
         <div class="board-body">
           <div class="lead">
-          <h1>
-            <span class="sr-only">What's in the box?</span>
-            <span class="tiles wide" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span><span class="tile gap"></span><span class="tile">I</span><span class="tile">N</span></span><span class="tiles wide" aria-hidden="true"><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span><span class="tile gap"></span><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile">?</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">I</span><span class="tile">N</span><span class="tile gap"></span><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile">?</span></span>
-          </h1>
-          <p class="lede">Golf balls, tees, accessories and <strong>at least one thing you won't see coming</strong>. Nobody knows what's inside until it's opened. Boxes go on sale before Christmas 2026, for you or for the golfer you're buying for.</p>
+            <h1>
+              <span class="sr-only">What's in the box?</span>
+              <span class="tiles wide" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span><span class="tile gap"></span><span class="tile">I</span><span class="tile">N</span></span><span class="tiles wide" aria-hidden="true"><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span><span class="tile gap"></span><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile red">?</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">W</span><span class="tile">H</span><span class="tile">A</span><span class="tile">T</span><span class="tile">&#x27;</span><span class="tile">S</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">I</span><span class="tile">N</span><span class="tile gap"></span><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span></span><span class="tiles narrow" aria-hidden="true"><span class="tile">B</span><span class="tile">O</span><span class="tile">X</span><span class="tile red">?</span></span>
+            </h1>
+            <p class="lede">Golf balls, tees, accessories and <strong>at least one thing you won't see coming</strong>. Nobody knows what's inside until it's opened. Boxes go on sale before Christmas 2026, for you or for the golfer you're buying for.</p>
           </div>
 
           <form id="waitlist" novalidate>
             <div class="cols" aria-hidden="true"><span>Pos</span><span>Name</span><span>Status</span></div>
             <div class="entry">
-              <div class="pos" id="pos" aria-hidden="true"><span class="tile red">?</span></div>
-              <div class="name-slot">
+              <div class="pos tiles" id="pos" aria-hidden="true"><span class="tile red">?</span></div>
+              <div class="name-slot" id="name-slot">
                 <label class="sr-only" for="name">First name</label>
-                <input id="name" name="name" type="text" autocomplete="given-name" maxlength="80" placeholder="Your first name" required>
-                <div class="tiles name-tiles" id="name-tiles" hidden aria-hidden="true"></div>
+                <input id="name" name="name" type="text" autocomplete="given-name" autocapitalize="characters" spellcheck="false" maxlength="80" placeholder="Your first name" required>
+                <div class="tiles typed" id="typed" aria-hidden="true"><span class="tile gap cursor"></span></div>
               </div>
               <div class="status" id="status" aria-hidden="true">Not yet</div>
             </div>
@@ -251,7 +318,7 @@
             <div id="form-extra">
               <div class="more">
                 <label class="f"><span>Email</span>
-                  <input id="email" name="email" type="email" autocomplete="email" maxlength="200" placeholder="you@example.com" required>
+                  <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="200" placeholder="you@example.com" required>
                 </label>
                 <label class="f"><span>How often do you play?</span>
                   <select id="level" name="level">
@@ -267,7 +334,7 @@
               <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
               <label class="consent"><input type="checkbox" id="consent" name="consent" required><span>I'm happy for Bunker Box to email me about the launch. We'll only use your details for this.</span></label>
               <div class="actions">
-                <button type="submit" class="post" id="submit">Post my name</button>
+                <button type="submit" class="post" id="submit"><span id="submit-label">Post my name</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
                 <div class="msg" id="msg" role="status" aria-live="polite"></div>
               </div>
             </div>
@@ -284,15 +351,15 @@
 
   <section id="inside">
     <div class="wrap">
-      <h2>What's in the box</h2>
-      <p class="intro">Every box is different. This much we can tell you.</p>
+      <h2 data-reveal><span class="rv">What's in the box</span></h2>
+      <p class="intro" data-reveal style="--d: 120ms">Every box is different. This much we can tell you.</p>
       <div class="card-table">
         <table>
           <thead><tr><th scope="col">In every box</th><th scope="col">What to expect</th><th scope="col"><span class="sr-only">Known?</span></th></tr></thead>
           <tbody>
-            <tr><td>Golf balls</td><td>A mix of brands, from tour-level balls to reliable everyday ones.</td><td><span class="tile" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></td></tr>
-            <tr><td>Tees &amp; accessories</td><td>Tees, ball markers, divot tools and other bits for the bag.</td><td><span class="tile" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></td></tr>
-            <tr class="mystery"><td>The surprise</td><td>At least one extra you won't see coming. That's the point.</td><td><span class="tile red" role="img" aria-label="Unknown">?</span></td></tr>
+            <tr data-reveal><td>Golf balls</td><td>A mix of brands, from tour-level balls to reliable everyday ones.</td><td><span class="tiles"><span class="tile stamp" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></span></td></tr>
+            <tr data-reveal style="--d: 90ms"><td>Tees &amp; accessories</td><td>Tees, ball markers, divot tools and other bits for the bag.</td><td><span class="tiles"><span class="tile stamp" role="img" aria-label="Yes"><svg width="55%" viewBox="0 0 24 24" fill="none" stroke="#1d5a37" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span></span></td></tr>
+            <tr class="mystery" data-reveal style="--d: 180ms"><td>The surprise</td><td>At least one extra you won't see coming. That's the point.</td><td><span class="tiles"><span class="tile red stamp" id="mystery-row" role="img" aria-label="Unknown">?</span></span></td></tr>
           </tbody>
         </table>
       </div>
@@ -302,22 +369,37 @@
   <section id="gift">
     <div class="wrap gift">
       <div>
-        <h2>Buying for a golfer?</h2>
-        <p>Golfers are hard to buy for. They already own the clubs, and they lose balls faster than anyone can keep up. A Bunker Box is a present they'll actually use, with a surprise they didn't pick themselves.</p>
-        <p><strong>Boxes go on sale before Christmas 2026.</strong> Join the list and we'll email you before launch, so you can order in time.</p>
+        <h2 data-reveal><span class="rv">Buying for a golfer?</span></h2>
+        <p data-reveal style="--d: 120ms">Golfers are hard to buy for. They already own the clubs, and they lose balls faster than anyone can keep up. A Bunker Box is a present they'll actually use, with a surprise they didn't pick themselves.</p>
+        <p data-reveal style="--d: 200ms"><strong>Boxes go on sale before Christmas 2026.</strong> Join the list and we'll email you before launch, so you can order in time.</p>
       </div>
       <ol class="steps">
-        <li><b>1</b><div><h3>Post your name</h3><p>Join the waiting list. It takes ten seconds.</p></div></li>
-        <li><b>2</b><div><h3>Hear first</h3><p>We email the list before boxes go on sale.</p></div></li>
-        <li><b>3</b><div><h3>Open it</h3><p>Order, unbox, and find out what's inside.</p></div></li>
+        <li data-reveal><span class="tiles step-n"><span class="tile red">1</span></span><div><h3>Post your name</h3><p>Join the waiting list. It takes ten seconds.</p></div></li>
+        <li data-reveal style="--d: 110ms"><span class="tiles step-n"><span class="tile red">2</span></span><div><h3>Hear first</h3><p>We email the list before boxes go on sale.</p></div></li>
+        <li data-reveal style="--d: 220ms"><span class="tiles step-n"><span class="tile red">3</span></span><div><h3>Open it</h3><p>Order, unbox, and find out what's inside.</p></div></li>
       </ol>
     </div>
   </section>
 
-  <section class="last">
+  <section class="last" id="last">
     <div class="wrap">
-      <h2>Get your name on the board</h2>
-      <a href="#board">Join the waiting list</a>
+      <h2 data-reveal><span class="rv">Get your name on the board</span></h2>
+      <div class="putt" aria-hidden="true">
+        <svg viewBox="0 0 520 92">
+          <ellipse cx="260" cy="66" rx="256" ry="22" fill="#2b7a4b"/>
+          <ellipse cx="260" cy="66" rx="256" ry="22" fill="none" stroke="#24683f" stroke-width="3"/>
+          <ellipse cx="404" cy="66" rx="15" ry="5.5" fill="#0b2718"/>
+          <line x1="404" y1="66" x2="404" y2="6" stroke="#f1f6ef" stroke-width="3" stroke-linecap="round"/>
+          <path id="pennant" d="M405.5 7 L444 16.5 L405.5 26 Z" fill="#c4122f" style="transform-box: view-box; transform-origin: 405.5px 16.5px"/>
+          <g id="ball" style="transform: translate(26px, 57px)">
+            <circle r="9.5" fill="#fbfcf8" stroke="#c9cec2" stroke-width="1"/>
+            <g id="dimples" fill="#c9cec2" style="transform-origin: 0 0">
+              <circle cx="-3.5" cy="-3" r="1.3"/><circle cx="2.5" cy="-4.5" r="1.3"/><circle cx="4.5" cy="1.5" r="1.3"/><circle cx="-1" cy="2.5" r="1.3"/><circle cx="-5" cy="3" r="1.1"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <a class="cta" id="cta" href="#board">Join the waiting list<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
     </div>
   </section>
 </main>
@@ -329,50 +411,155 @@
   </div>
 </footer>
 
+<div class="dock" id="dock" aria-hidden="true"><button class="post" id="dock-btn" type="button" tabindex="-1">Post my name<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button></div>
+
 <script>
+  document.documentElement.classList.add("js");
   const $ = s => document.querySelector(s);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
+  const LETTERS = "ABCDEFGHJKLMNOPRSTUVWXYZ";
   $("#year").textContent = new Date().getFullYear();
 
-  function makeTiles(text, cls = "") {
-    return [...text].map(ch => {
-      const t = document.createElement("span");
-      t.className = "tile" + (ch === " " ? " gap" : "") + (cls ? " " + cls : "");
-      t.textContent = ch === " " ? "" : ch;
-      return t;
-    });
+  function makeTile(ch, cls = "") {
+    const t = document.createElement("span");
+    t.className = "tile" + (ch === " " ? " gap" : "") + (cls ? " " + cls : "");
+    t.textContent = ch === " " ? "" : ch;
+    return t;
   }
 
-  // Plates slot into the board: drop a few pixels into place, out of a slight blur.
-  function slotIn(tiles, { delay = 0, step = 28, distance = 0.28 } = {}) {
+  // The one motion material: a plate drops a few pixels into its slot, out of a slight blur.
+  function slotIn(tiles, { delay = 0, step = 28, distance = 0.28, duration = 520 } = {}) {
     tiles.forEach((t, i) => {
-      if (reduced) {
-        t.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: delay + i * 10, fill: "backwards" });
-        return;
-      }
+      if (reduced) { t.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: delay + i * 10, fill: "backwards" }); return; }
       t.animate(
-        [
-          { transform: `translateY(-${distance * 100}%)`, opacity: 0, filter: "blur(3px)" },
-          { transform: "translateY(0)", opacity: 1, filter: "blur(0)" }
-        ],
-        { duration: 520, delay: delay + i * step, easing: EASE, fill: "backwards" }
+        [{ transform: `translateY(-${distance * 100}%)`, opacity: 0, filter: "blur(3px)" }, { transform: "translateY(0)", opacity: 1, filter: "blur(0)" }],
+        { duration, delay: delay + i * step, easing: EASE, fill: "backwards" }
       );
     });
   }
 
-  // Board is set on load.
+  // Swap the plate in a slot: lift the old one out, drop the new one in.
+  function swap(tile, ch, d = 90) {
+    return new Promise(done => {
+      const out = tile.animate([{ transform: "none", opacity: 1 }, { transform: "translateY(-22%)", opacity: 0, filter: "blur(2px)" }], { duration: d * 0.45, easing: "ease-in" });
+      out.onfinish = () => {
+        tile.textContent = ch;
+        const inn = tile.animate([{ transform: "translateY(-22%)", opacity: 0, filter: "blur(2px)" }, { transform: "none", opacity: 1, filter: "blur(0)" }], { duration: d * 0.55, easing: EASE });
+        inn.onfinish = done;
+      };
+    });
+  }
+  async function shuffle(tile, final = "?", turns = 7) {
+    if (reduced || !tile || tile.dataset.busy) return;
+    tile.dataset.busy = "1";
+    for (let i = 0; i < turns; i++) await swap(tile, LETTERS[Math.floor(Math.random() * LETTERS.length)], 80 + i * 12);
+    await swap(tile, final, 220);
+    delete tile.dataset.busy;
+  }
+  const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && el.offsetParent; };
+
+  // Board is set on load, then the "?" keeps changing its mind.
   document.fonts.ready.then(() => {
     const rows = [...document.querySelectorAll("h1 .tiles")].filter(r => r.offsetParent);
     rows.forEach((row, r) => slotIn([...row.children], { delay: 120 + r * 220 }));
+    const settle = 120 + rows.length * 220 + 900;
+    setTimeout(function tick() {
+      const q = [...document.querySelectorAll("h1 .tiles")].filter(r => r.offsetParent).pop()?.lastElementChild;
+      if (!document.hidden && q && inView(q)) shuffle(q);
+      setTimeout(tick, 5200);
+    }, settle);
   });
 
-  // Names-on-the-board counter, shown once there are enough to be worth showing.
-  fetch("/api/join").then(r => r.ok ? r.json() : null).then(d => {
-    if (d && typeof d.count === "number" && d.count >= 5) { $("#count").textContent = d.count.toLocaleString(); $("#count-line").hidden = false; }
-  }).catch(() => {});
+  function countUp(el, to) {
+    if (reduced) { el.textContent = to.toLocaleString(); return; }
+    const from = Number(el.dataset.n || 0), start = performance.now(); el.dataset.n = to;
+    (function step(now) {
+      const p = Math.min(1, (now - start) / 900), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(from + (to - from) * e).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  function showCount(n) {
+    if (typeof n !== "number" || n < 5) return;
+    $("#count-line").hidden = false; countUp($("#count"), n);
+  }
+  fetch("/api/join").then(r => r.ok ? r.json() : null).then(d => d && showCount(d.count)).catch(() => {});
 
-  const form = $("#waitlist"), msg = $("#msg"), submit = $("#submit");
+  // Name plates appear as you type.
+  const nameInput = $("#name"), typed = $("#typed"), slot = $("#name-slot"), cursor = typed.querySelector(".cursor");
+  let shown = "";
+  const cleanName = v => v.toUpperCase().replace(/[^A-Z' -]/g, "").replace(/\s+/g, " ").replace(/^ /, "").slice(0, 14);
+  function fitTiles(n) {
+    const base = parseFloat(getComputedStyle(slot).getPropertyValue("--nt")) || 44;
+    const room = slot.clientWidth - 26;
+    typed.style.setProperty("--t", Math.max(20, Math.min(base, room / ((n + 1) * 0.86))) + "px");
+  }
+  function renderTyped() {
+    const next = cleanName(nameInput.value);
+    let i = 0; while (i < shown.length && i < next.length && shown[i] === next[i]) i++;
+    [...typed.querySelectorAll(".tile:not(.cursor)")].slice(i).forEach(t => t.remove());
+    const added = [...next.slice(i)].map(ch => makeTile(ch));
+    added.forEach(t => typed.insertBefore(t, cursor));
+    fitTiles(next.length);
+    slotIn(added, { step: 24, distance: 0.35, duration: 240 });
+    shown = next;
+  }
+  nameInput.addEventListener("input", renderTyped);
+  nameInput.addEventListener("change", renderTyped);
+  addEventListener("resize", () => fitTiles(shown.length));
+
+  // Scroll reveals, ticks stamped onto the scorecard, step plates dropped in.
+  const revealer = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target; el.classList.add("in"); revealer.unobserve(el);
+    const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
+    const stamp = el.querySelector(".stamp");
+    if (stamp && !reduced) stamp.animate([{ transform: "scale(1.35)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, delay: d + 260, easing: EASE, fill: "backwards" });
+    const step = el.querySelector(".step-n");
+    if (step) slotIn([...step.children], { delay: d + 120, distance: 0.45 });
+  }), { threshold: 0.2, rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll("[data-reveal]").forEach(el => revealer.observe(el));
+  const mysteryRow = $("#mystery-row");
+  setInterval(() => { if (!document.hidden && inView(mysteryRow)) shuffle(mysteryRow, "?", 6); }, 6100);
+
+  // A putt drops in above the last call to action.
+  const ball = $("#ball"), dimples = $("#dimples"), pennant = $("#pennant"), cta = $("#cta");
+  let putted = false;
+  new IntersectionObserver((entries, obs) => {
+    if (!entries[0].isIntersecting || putted) return;
+    putted = true; obs.disconnect();
+    if (reduced) { ball.style.opacity = 0; return; }
+    const roll = { duration: 1700, easing: "cubic-bezier(0.2, 0.9, 0.3, 1)", fill: "forwards", delay: 250 };
+    const r = ball.animate([{ transform: "translate(26px, 57px)" }, { transform: "translate(396px, 57px)" }], roll);
+    dimples.animate([{ transform: "rotate(0deg)" }, { transform: "rotate(1080deg)" }], roll);
+    r.onfinish = () => {
+      ball.animate([{ transform: "translate(396px, 57px)", opacity: 1 }, { transform: "translate(404px, 64px) scale(0.5)", opacity: 0 }], { duration: 180, easing: "ease-in", fill: "forwards" });
+      pennant.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0.78)" }, { transform: "scaleX(1.04)" }, { transform: "scaleX(0.9)" }, { transform: "scaleX(1)" }], { duration: 900, delay: 120, easing: "ease-out" });
+      cta.animate([{ transform: "scale(1)" }, { transform: "scale(1.04)" }, { transform: "scale(1)" }], { duration: 420, delay: 260, easing: EASE });
+    };
+  }, { threshold: 0.6 }).observe($(".putt"));
+
+  // Phone dock: a thumb-height way back to the form once it scrolls away.
+  const dock = $("#dock"), phone = matchMedia("(max-width: 760px)");
+  let joined = false; const seen = new Map();
+  function updateDock() {
+    const anyVisible = [...seen.values()].some(Boolean);
+    const show = phone.matches && !joined && !anyVisible && scrollY > 200;
+    dock.classList.toggle("show", show);
+    $("#dock-btn").tabIndex = show ? 0 : -1;
+    dock.setAttribute("aria-hidden", String(!show));
+  }
+  const dockWatch = new IntersectionObserver(es => { es.forEach(e => seen.set(e.target, e.isIntersecting)); updateDock(); });
+  [$("#waitlist"), $("#last"), $("footer")].forEach(el => dockWatch.observe(el));
+  addEventListener("scroll", updateDock, { passive: true });
+  phone.addEventListener?.("change", updateDock);
+  $("#dock-btn").addEventListener("click", () => {
+    nameInput.focus({ preventScroll: true });
+    $("#board").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  });
+
+  const form = $("#waitlist"), msg = $("#msg"), submit = $("#submit"), submitLabel = $("#submit-label");
   function fail(text, field) {
     msg.textContent = text; msg.className = "msg error";
     if (field) field.focus();
@@ -380,22 +567,23 @@
   }
 
   function postToBoard(name, position, existing) {
-    const nameTiles = $("#name-tiles");
-    const label = name.toUpperCase().replace(/[^A-Z' -]/g, "").slice(0, 12) || "YOU";
-    nameTiles.replaceChildren(...makeTiles(label));
-    $("#name").hidden = true;
-    nameTiles.hidden = false;
-    const pos = $("#pos");
-    pos.replaceChildren(...makeTiles(position ? String(position) : "IN", "red"));
+    joined = true; updateDock();
+    const label = cleanName(name) || "YOU";
+    if (label !== shown) { nameInput.value = label; renderTyped(); }
+    nameInput.blur(); nameInput.hidden = true; slot.classList.add("locked");
+    const plates = [...typed.querySelectorAll(".tile:not(.cursor)")];
+    if (!reduced) plates.forEach((t, i) => t.animate([{ transform: "translateY(0)" }, { transform: "translateY(5px)" }, { transform: "translateY(0)" }], { duration: 280, delay: i * 40, easing: "ease-out" }));
+    const pos = $("#pos"), wait = plates.length * 40 + 160;
+    const posText = position ? String(position) : "IN";
+    pos.classList.toggle("multi", posText.length > 1);
+    pos.replaceChildren(...[...posText].map(ch => makeTile(ch, "red")));
+    slotIn([...pos.children], { delay: wait, step: 70, distance: 0.45 });
     const status = $("#status");
-    status.textContent = existing ? "Already on" : "On the list";
-    status.classList.add("on");
-    $("#form-extra").hidden = true;
-    $("#posted").hidden = false;
+    status.textContent = existing ? "Already on" : "On the list"; status.classList.add("on");
+    if (!reduced) status.animate([{ opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0)" }], { duration: 420, delay: wait + 200, easing: EASE, fill: "backwards" });
+    $("#form-extra").hidden = true; $("#posted").hidden = false;
+    if (!reduced) $("#posted").animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 420, delay: wait + 300, easing: EASE, fill: "backwards" });
     if (existing) $("#posted-text").textContent = "That email was already on the board, so your place is saved. We'll email you before boxes go on sale.";
-    slotIn([...nameTiles.children], { step: 45, distance: 0.45 });
-    slotIn([...pos.children], { delay: nameTiles.children.length * 45 + 120, step: 60, distance: 0.45 });
-    if (!reduced) status.animate([{ opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0)" }], { duration: 400, delay: nameTiles.children.length * 45 + 300, easing: EASE, fill: "backwards" });
     $("#share").focus({ preventScroll: true });
   }
 
@@ -404,20 +592,20 @@
     msg.textContent = ""; msg.className = "msg";
     const data = Object.fromEntries(new FormData(form));
     data.consent = form.consent.checked;
-    if (!data.name.trim()) return fail("Add your first name so we can post it on the board.", $("#name"));
+    if (!data.name.trim()) return fail("Add your first name so we can post it on the board.", nameInput);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return fail("That email doesn't look right. Check it and try again.", $("#email"));
     if (!data.consent) return fail("Tick the box so we're allowed to email you about the launch.", $("#consent"));
-    submit.disabled = true; submit.textContent = "Posting…";
+    submit.disabled = true; submitLabel.textContent = "Posting…";
     try {
       const res = await fetch("/api/join", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       const out = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(out.error || "We couldn't post your name just now. Try again in a minute.");
       postToBoard(data.name.trim(), out.position, out.existing);
-      if (typeof out.count === "number" && out.count >= 5) { $("#count").textContent = out.count.toLocaleString(); $("#count-line").hidden = false; }
+      showCount(out.count);
     } catch (err) {
       fail(err.message);
     } finally {
-      submit.disabled = false; submit.textContent = "Post my name";
+      submit.disabled = false; submitLabel.textContent = "Post my name";
     }
   });
 
