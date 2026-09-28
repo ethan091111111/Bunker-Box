@@ -1,4 +1,5 @@
-import { redis, KEY, COUNTER } from "./_redis.js";
+import { redis, hasRedis, KEY, COUNTER } from "./_redis.js";
+import { canNotify, notifySignup } from "./_notify.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -7,7 +8,7 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === "GET") {
-      return res.status(200).json({ count: await redis("HLEN", KEY) });
+      return res.status(200).json({ count: hasRedis ? await redis("HLEN", KEY) : null });
     }
     if (req.method !== "POST") {
       res.setHeader("Allow", "GET, POST");
@@ -27,6 +28,13 @@ export default async function handler(req, res) {
     if (body.consent !== true) return res.status(400).json({ error: "Please tick the box so we can email you." });
 
     const record = { name, email, level, joinedAt: new Date().toISOString() };
+
+    if (!hasRedis) {
+      if (!canNotify) throw new Error("Neither Upstash Redis nor Resend is configured.");
+      if (!(await notifySignup(record))) throw new Error("Signup email could not be sent.");
+      return res.status(201).json({ ok: true });
+    }
+
     const added = await redis("HSETNX", KEY, email, JSON.stringify(record));
 
     if (!added) {
@@ -36,6 +44,7 @@ export default async function handler(req, res) {
 
     record.position = await redis("INCR", COUNTER);
     await redis("HSET", KEY, email, JSON.stringify(record));
+    await notifySignup(record);
 
     return res.status(201).json({ ok: true, position: record.position, count: await redis("HLEN", KEY) });
   } catch (err) {

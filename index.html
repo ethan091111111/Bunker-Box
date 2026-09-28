@@ -345,6 +345,7 @@
       $("#form-view").hidden = true;
       $("#success-view").hidden = false;
       $("#position").textContent = out.position ? "#" + out.position : "";
+      if (!out.position) $("#success-text").textContent = "We'll email you the moment boxes go on sale.";
       if (out.existing) $("#success-text").textContent = "You'd already signed up with that email, so your spot is saved.";
       if (typeof out.count === "number") countUp($("#count"), out.count);
       celebrate();
