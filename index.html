@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bunker Box — Get your name on the board</title>
+<title>Bunker Box — A little mystery, a lot of golf</title>
 <meta name="description" content="Bunker Box golf mystery boxes go on sale before Christmas 2026. Join the waiting list for first access.">
 <meta name="theme-color" content="#3c492b">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bunker Box — What's in the box?">
-<meta property="og:description" content="Golf mystery boxes, on sale before Christmas 2026. Get your name on the board.">
+<meta property="og:description" content="Golf mystery boxes, on sale before Christmas 2026. Join the waiting list.">
 <meta property="og:url" content="https://www.bunkerbox.uk/">
 <meta property="og:image" content="https://www.bunkerbox.uk/og.png">
 <link rel="canonical" href="https://www.bunkerbox.uk/">
@@ -489,7 +489,7 @@
     form.querySelectorAll("[aria-invalid]").forEach(el => el.removeAttribute("aria-invalid"));
     const data = Object.fromEntries(new FormData(form));
     data.consent = form.consent.checked;
-    if (!data.name.trim()) return fail("Add your first name so we can post it on the board.", nameInput);
+    if (!data.name.trim()) return fail("Add your first name so we know who the box is for.", nameInput);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return fail("That email doesn't look right. Check it and try again.", $("#email"));
     if (!data.consent) return fail("Tick the box so we're allowed to email you about the launch.", $("#consent"));
     submit.disabled = true; submitLabel.textContent = "Joining…";
