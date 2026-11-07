@@ -1,5 +1,5 @@
 import { redis, hasRedis, KEY, COUNTER } from "./_redis.js";
-import { canNotify, notifySignup } from "./_notify.js";
+import { canNotify, notifySignup, sendWelcome, addContact } from "./_notify.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
     if (!hasRedis) {
       if (!canNotify) throw new Error("Neither Upstash Redis nor Resend is configured.");
       if (!(await notifySignup(record))) throw new Error("Signup email could not be sent.");
+      await Promise.all([sendWelcome(record), addContact(record)]);
       return res.status(201).json({ ok: true });
     }
 
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
 
     record.position = await redis("INCR", COUNTER);
     await redis("HSET", KEY, email, JSON.stringify(record));
-    await notifySignup(record);
+    await Promise.all([notifySignup(record), sendWelcome(record), addContact(record)]);
 
     return res.status(201).json({ ok: true, position: record.position, count: await redis("HLEN", KEY) });
   } catch (err) {
