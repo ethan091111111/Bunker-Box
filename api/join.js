@@ -8,7 +8,10 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === "GET") {
-      return res.status(200).json({ count: hasRedis ? await redis("HLEN", KEY) : null });
+      return res.status(200).json({
+        count: hasRedis ? await redis("HLEN", KEY) : null,
+        setup: { email: canNotify, mailingList: Boolean(process.env.RESEND_SEGMENT_ID), verifiedSender: Boolean(process.env.RESEND_FROM), database: hasRedis }
+      });
     }
     if (req.method !== "POST") {
       res.setHeader("Allow", "GET, POST");
