@@ -43,6 +43,20 @@ async function resend(path, body, idempotencyKey) {
   return { ok: false };
 }
 
+// Verification status of the sending domain in Resend, e.g. "verified" or "pending".
+export async function domainStatus() {
+  if (!apiKey) return null;
+  const domain = from.match(/@([^>\s]+)/)?.[1];
+  try {
+    const res = await fetch(`${API}/domains`, { headers: { Authorization: `Bearer ${apiKey}` } });
+    if (!res.ok) return `error ${res.status}`;
+    const { data = [] } = await res.json();
+    return data.find(d => d.name === domain)?.status || "not found";
+  } catch {
+    return "network";
+  }
+}
+
 // Email to the team for each new signup. Returns true when Resend accepted it.
 export async function notifySignup(record) {
   if (!canNotify) return false;
