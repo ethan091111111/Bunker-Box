@@ -110,13 +110,13 @@
   .hero { position: relative; }
   .scene { display: block; }
   .scene img { display: block; width: 100%; height: auto; }
-  .hero-copy { position: relative; padding: 48px 0 32px; }
+  .hero-copy { position: relative; z-index: 1; padding: 48px 0 32px; }
   h1 {
     margin: 0; max-width: 10em;
     font: 400 72px/76px var(--serif); letter-spacing: -0.02em; text-wrap: balance;
   }
   .sub { margin-top: 20px; max-width: 34rem; font-size: 19px; line-height: 28px; color: var(--ink-2); text-wrap: pretty; }
-  .slip-wrap { position: relative; margin-top: -80px; }
+  .slip-wrap { position: relative; z-index: 1; margin-top: -80px; }
   .scene img {
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 72%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 72%, transparent 100%);
@@ -129,13 +129,13 @@
       -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
       mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
     }
-    .hero-copy { min-height: calc(var(--scene-h) - var(--overlap)); padding: 120px 0 0; }
+    .hero-copy { min-height: calc(var(--scene-h) - var(--overlap)); padding: 136px 0 0; }
     .slip-wrap { margin-top: 0; }
   }
 
   /* The signup card, laid out like the box's packing slip */
   .slip {
-    max-width: 720px; scroll-margin-top: 16px;
+    max-width: 760px; scroll-margin-top: 16px;
     background: var(--card); border: 1px solid var(--line); border-radius: 16px;
     padding: 24px 32px 28px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.06);
@@ -146,7 +146,7 @@
   }
   .slip-title { font-weight: 500; }
   .count { font-size: 14px; line-height: 20px; color: var(--ink-3); }
-  .fields { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 16px; }
+  .fields { display: grid; grid-template-columns: 1fr 1.25fr 1.2fr; gap: 16px; }
   .f { display: grid; gap: 8px; align-content: start; }
   .f > span { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-2); }
   .f input, .f select {
@@ -241,6 +241,10 @@
 
   @media (max-width: 1099px) {
     h1 { font-size: 56px; line-height: 60px; }
+    .scene { margin-top: -96px; }
+  }
+  @media (max-width: 599px) {
+    .scene { margin-top: -48px; }
   }
   @media (max-width: 760px) {
     .wrap { width: min(1180px, 100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); }
@@ -298,14 +302,15 @@
 
 <main>
   <section class="hero" aria-labelledby="hero-title">
-    <picture class="scene">
-      <source media="(max-width: 599px)" srcset="/images/hero-phone.webp" width="690" height="752">
-      <img src="/images/hero.webp" width="1344" height="752" fetchpriority="high" alt="A cardboard box tied with ribbon sits in a raked bunker on a links course at first light, with a flag on the green behind it">
-    </picture>
     <div class="wrap hero-copy">
       <h1 id="hero-title">Put your name on a box</h1>
       <p class="sub">Golf balls, tees, accessories and at least one thing you won't see coming. On sale before Christmas 2026, for you or the golfer you're buying for.</p>
     </div>
+
+    <picture class="scene">
+      <source media="(max-width: 599px)" srcset="/images/hero-phone.webp" width="690" height="752">
+      <img src="/images/hero.webp" width="1344" height="752" fetchpriority="high" alt="A cardboard box tied with ribbon sits in a raked bunker on a links course at first light, with a flag on the green behind it">
+    </picture>
 
     <div class="wrap slip-wrap">
       <div class="slip" id="board">
