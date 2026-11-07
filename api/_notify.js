@@ -9,6 +9,9 @@ const segmentId = process.env.RESEND_SEGMENT_ID;
 
 export const canNotify = Boolean(apiKey && to);
 
+// Status code and error type of the last failed Resend call (no message text, which can contain addresses).
+export let lastFailure = null;
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // One call to Resend, retried once on network errors, 429 and 5xx. Never throws.
@@ -23,12 +26,13 @@ async function resend(path, body, idempotencyKey) {
       const retryable = res.status === 429 || res.status >= 500;
       if (!retryable || attempt === 1) {
         console.error(`Resend ${path} failed`, res.status, data);
+        lastFailure = `${res.status} ${data.name || "error"}`;
         return { ok: false, data };
       }
       const wait = Number(res.headers.get("retry-after")) * 1000 || 800;
       await sleep(Math.min(wait, 3000));
     } catch (err) {
-      if (attempt === 1) { console.error(`Resend ${path} failed`, err); return { ok: false }; }
+      if (attempt === 1) { console.error(`Resend ${path} failed`, err); lastFailure = "network"; return { ok: false }; }
       await sleep(800);
     }
   }

@@ -1,5 +1,5 @@
 import { redis, hasRedis, KEY, COUNTER } from "./_redis.js";
-import { canNotify, notifySignup, sendWelcome, addContact } from "./_notify.js";
+import { canNotify, notifySignup, sendWelcome, addContact, lastFailure } from "./_notify.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -53,6 +53,6 @@ export default async function handler(req, res) {
     return res.status(201).json({ ok: true, position: record.position, count: await redis("HLEN", KEY) });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Sorry, we couldn't save your spot. Please try again." });
+    return res.status(500).json({ error: "Sorry, we couldn't save your spot. Please try again.", code: lastFailure || undefined });
   }
 }
