@@ -25,7 +25,7 @@ The surprise is the product: nobody knows exactly what is inside until they open
 
 ## Operating Context
 
-Boxes go on sale before Christmas 2026. Until then the only action is joining the waiting list (first name, email, optional "how often do you play", consent). Signups are stored in Upstash Redis when configured and emailed to the team via Resend.
+Boxes go on sale before Christmas 2026. Until then the only action is joining the waiting list (first name, email, optional "how often do you play", consent). Signups are stored as contacts in the Resend "Waiting list" segment (Upstash Redis is optional and also stores them when configured). Each signup sends an alert email to the team via Resend, at the address in the `NOTIFY_EMAIL` setting. Welcome emails to people who join start once the sending domain mail.bunkerbox.uk is verified in Resend.
 
 ## Capabilities and Constraints
 
@@ -36,12 +36,15 @@ Boxes go on sale before Christmas 2026. Until then the only action is joining th
 ## Brand Commitments
 
 - Name: Bunker Box.
+- Logo and colours supplied by the team: the Bunker Box logo (cream serif wordmark with a sage woman golfer, on olive) and the colour scheme olive `#3c492b`, cream `#f7f2e5` and sage `#b9b88e`. Follow them.
+- Tagline: "A little mystery, a lot of golf".
 - Bunker Box is a Young Enterprise company run by a team of S5 pupils at George Watson's College, Edinburgh. The site says so.
 - Launch timing wording: "before Christmas 2026".
 
 ## Evidence on Hand
 
-- One Higgsfield-generated hero image of a black box with a lime ribbon in a bunker (hosted on Higgsfield's CDN, referenced by URL in `index.html`).
+- The supplied logo, with its tagline "A little mystery, a lot of golf": `images/logo.png` (cut out, for olive surfaces) and `images/logo-square.png` (the original artwork).
+- One Higgsfield-generated hero image of a kraft box tied with olive ribbon in a links bunker at first light, saved in the repo as `images/hero.webp` and `images/hero-phone.webp`. The old reference to an image on Higgsfield's CDN is gone; nothing is hot-linked.
 - No testimonials, customers, reviews, press, prices or item lists exist. Never invent them.
 
 ## Product Principles
