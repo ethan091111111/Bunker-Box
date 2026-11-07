@@ -34,9 +34,9 @@ export default async function handler(req, res) {
 
     if (!hasRedis) {
       if (!canNotify) throw new Error("Neither Upstash Redis nor Resend is configured.");
-      const [alerted, listed] = await Promise.all([notifySignup(record), addContact(record), sendWelcome(record)]);
+      const [alerted, listed, welcomed] = await Promise.all([notifySignup(record), addContact(record), sendWelcome(record)]);
       if (!alerted && !listed) throw new Error("Signup could not be emailed or saved.");
-      return res.status(201).json({ ok: true, alerted, listed });
+      return res.status(201).json({ ok: true, alerted, listed, welcomed });
     }
 
     const added = await redis("HSETNX", KEY, email, JSON.stringify(record));
