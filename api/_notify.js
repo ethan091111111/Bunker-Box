@@ -1,10 +1,9 @@
 const API = "https://api.resend.com";
 const apiKey = process.env.RESEND_API_KEY;
 const to = process.env.NOTIFY_EMAIL;
-// RESEND_FROM is set once mail.bunkerbox.uk is verified in Resend. Until then only the
-// team alert can go out, from Resend's test sender, to the Resend account owner.
-const verifiedFrom = process.env.RESEND_FROM;
-const from = verifiedFrom || "Bunker Box <onboarding@resend.dev>";
+const from = process.env.RESEND_FROM || "Bunker Box <hello@mail.bunkerbox.uk>";
+// Resend's test sender, used while our domain is unverified. It only reaches the account owner.
+const testFrom = "Bunker Box <onboarding@resend.dev>";
 const segmentId = process.env.RESEND_SEGMENT_ID;
 
 export const canNotify = Boolean(apiKey && to);
@@ -14,6 +13,11 @@ export let lastFailure = null;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// Resend answers 403 while mail.bunkerbox.uk is unverified. Skip our sender for a while after that.
+let domainBlockedUntil = 0;
+const domainReady = () => Date.now() >= domainBlockedUntil;
+const markDomainBlocked = () => { domainBlockedUntil = Date.now() + 10 * 60 * 1000; };
+
 // One call to Resend, retried once on network errors, 429 and 5xx. Never throws.
 async function resend(path, body, idempotencyKey) {
   const headers = { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" };
@@ -22,12 +26,12 @@ async function resend(path, body, idempotencyKey) {
     try {
       const res = await fetch(API + path, { method: "POST", headers, body: JSON.stringify(body) });
       const data = await res.json().catch(() => ({}));
-      if (res.ok) return { ok: true, data };
+      if (res.ok) return { ok: true, data, status: res.status };
       const retryable = res.status === 429 || res.status >= 500;
       if (!retryable || attempt === 1) {
         console.error(`Resend ${path} failed`, res.status, data);
         lastFailure = `${res.status} ${data.name || "error"}`;
-        return { ok: false, data };
+        return { ok: false, data, status: res.status };
       }
       const wait = Number(res.headers.get("retry-after")) * 1000 || 800;
       await sleep(Math.min(wait, 3000));
@@ -42,16 +46,23 @@ async function resend(path, body, idempotencyKey) {
 // Email to the team for each new signup. Returns true when Resend accepted it.
 export async function notifySignup(record) {
   if (!canNotify) return false;
-  const first = await sendAlert(record, to.split(",").map(s => s.trim()).filter(Boolean), "");
-  if (first.ok || verifiedFrom) return first.ok;
-  // Resend's test sender only reaches the account owner, and its 403 names that address.
-  const owner = /own email address \(([^)\s]+@[^)\s]+)\)/.exec(first.data?.message || "")?.[1];
-  return owner ? (await sendAlert(record, [owner], "/owner")).ok : false;
+  const recipients = to.split(",").map(s => s.trim()).filter(Boolean);
+  if (domainReady()) {
+    const sent = await sendAlert(record, from, recipients, "");
+    if (sent.ok) return true;
+    if (sent.status !== 403) return false;
+    markDomainBlocked();
+  }
+  const test = await sendAlert(record, testFrom, recipients, "/test");
+  if (test.ok) return true;
+  // The test sender's 403 names the account owner's address; send the alert there instead.
+  const owner = /own email address \(([^)\s]+@[^)\s]+)\)/.exec(test.data?.message || "")?.[1];
+  return owner ? (await sendAlert(record, testFrom, [owner], "/owner")).ok : false;
 }
 
-async function sendAlert(record, recipients, keySuffix) {
-  const { ok, data } = await resend("/emails", {
-    from,
+function sendAlert(record, sender, recipients, keySuffix) {
+  return resend("/emails", {
+    from: sender,
     to: recipients,
     reply_to: record.email,
     template: {
@@ -65,15 +76,13 @@ async function sendAlert(record, recipients, keySuffix) {
       }
     }
   }, `signup-alert/${record.email}/${record.joinedAt}${keySuffix}`);
-  if (ok) console.log("Signup alert sent", data.id);
-  return { ok, data };
 }
 
-// Welcome email to the person who joined. Only once the sending domain is verified.
+// Welcome email to the person who joined. Only goes out once the sending domain is verified.
 export async function sendWelcome(record) {
-  if (!apiKey || !verifiedFrom) return false;
-  const { ok, data } = await resend("/emails", {
-    from: verifiedFrom,
+  if (!apiKey || !domainReady()) return false;
+  const { ok, data, status } = await resend("/emails", {
+    from,
     to: record.email,
     template: {
       id: "welcome",
@@ -83,6 +92,7 @@ export async function sendWelcome(record) {
       }
     }
   }, `welcome/${record.email}`);
+  if (status === 403) markDomainBlocked();
   if (ok) console.log("Welcome email sent", data.id);
   return ok;
 }
