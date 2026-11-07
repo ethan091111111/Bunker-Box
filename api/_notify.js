@@ -53,11 +53,7 @@ export async function notifySignup(record) {
     if (sent.status !== 403) return false;
     markDomainBlocked();
   }
-  const test = await sendAlert(record, testFrom, recipients, "/test");
-  if (test.ok) return true;
-  // The test sender's 403 names the account owner's address; send the alert there instead.
-  const owner = /own email address \(([^)\s]+@[^)\s]+)\)/.exec(test.data?.message || "")?.[1];
-  return owner ? (await sendAlert(record, testFrom, [owner], "/owner")).ok : false;
+  return (await sendAlert(record, testFrom, recipients, "/test")).ok;
 }
 
 function sendAlert(record, sender, recipients, keySuffix) {
