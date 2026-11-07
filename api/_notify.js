@@ -57,6 +57,23 @@ export async function domainStatus() {
   }
 }
 
+// Domains alerts go to, and the delivery status of the newest alert. Never full addresses.
+export async function alertStatus() {
+  if (!canNotify) return null;
+  const recipients = to.split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
+  const status = { to: recipients.map(r => r.split("@")[1]), last: null };
+  try {
+    const res = await fetch(`${API}/emails?limit=20`, { headers: { Authorization: `Bearer ${apiKey}` } });
+    if (!res.ok) return { ...status, last: `error ${res.status}` };
+    const { data = [] } = await res.json();
+    const alert = data.find(e => (e.to || []).some(r => recipients.includes(String(r).toLowerCase())));
+    if (alert) status.last = { event: alert.last_event, at: alert.created_at };
+  } catch {
+    status.last = "network";
+  }
+  return status;
+}
+
 // Email to the team for each new signup. Returns true when Resend accepted it.
 export async function notifySignup(record) {
   if (!canNotify) return false;

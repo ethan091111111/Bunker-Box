@@ -1,5 +1,5 @@
 import { redis, hasRedis, KEY, COUNTER } from "./_redis.js";
-import { canNotify, notifySignup, sendWelcome, addContact, domainStatus, lastFailure } from "./_notify.js";
+import { canNotify, notifySignup, sendWelcome, addContact, domainStatus, alertStatus, lastFailure } from "./_notify.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     if (req.method === "GET") {
       return res.status(200).json({
         count: hasRedis ? await redis("HLEN", KEY) : null,
-        setup: { email: canNotify, mailingList: Boolean(process.env.RESEND_SEGMENT_ID), domain: await domainStatus(), database: hasRedis }
+        setup: { email: canNotify, mailingList: Boolean(process.env.RESEND_SEGMENT_ID), domain: await domainStatus(), alerts: await alertStatus(), database: hasRedis }
       });
     }
     if (req.method !== "POST") {
