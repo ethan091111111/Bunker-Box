@@ -24,59 +24,59 @@ colors:
   focus-halo: "rgba(60, 73, 43, 0.16)"
 typography:
   display:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "72px"
-    fontWeight: 400
-    lineHeight: "76px"
-    letterSpacing: "-0.02em"
+    fontFamily: "Big Shoulders, Barlow, sans-serif"
+    fontSize: "80px"
+    fontWeight: 700
+    lineHeight: "80px"
+    letterSpacing: "0"
   headline:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "48px"
-    fontWeight: 400
-    lineHeight: "52px"
-    letterSpacing: "-0.02em"
+    fontFamily: "Big Shoulders, Barlow, sans-serif"
+    fontSize: "52px"
+    fontWeight: 700
+    lineHeight: "56px"
+    letterSpacing: "0"
   name:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "32px"
-    fontWeight: 400
-    lineHeight: "36px"
+    fontFamily: "Big Shoulders, Barlow, sans-serif"
+    fontSize: "36px"
+    fontWeight: 700
+    lineHeight: "40px"
   title:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "18px"
     fontWeight: 500
     lineHeight: "24px"
   body:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: "24px"
   body-large:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "19px"
     fontWeight: 400
     lineHeight: "28px"
   lead:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "18px"
     fontWeight: 400
     lineHeight: "28px"
   body-small:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 400
     lineHeight: "20px"
   label:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 500
     lineHeight: "20px"
   button:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 500
     lineHeight: "20px"
   marker:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Barlow, system-ui, sans-serif"
     fontSize: "14px"
     fontWeight: 600
     lineHeight: 1
@@ -192,9 +192,9 @@ Process: the page was redesigned with the unslop skill (by Damir Sokolovsky, @he
 
 ## Typography
 
-- **Instrument Serif 400** is for headlines only: the hero headline (72/76px), section headings (48/52px) and the visitor's name in the joined state (32/36px). Letter spacing -0.02em on headlines, `text-wrap: balance`. It sits well with the logo's serif.
-- **Instrument Sans** (400/500/600) is the interface face: body 16/24px, the hero subline 19/28px, section leads 18/28px, list titles 18/24px at 500, field labels 14/20px at 500, small text 14/20px, buttons 16/20px at 500 (15/20px for the secondary button and the header link), the marker numeral at 600.
-- Both are self-hosted woff2 in `/fonts` with their OFL licences; Instrument Serif 400 and Instrument Sans 400 are preloaded. `font-display: swap`.
+- **Big Shoulders 700** (variable) is for headlines only, in sentence case: the hero headline (80/80px, 56/60px under 1100px, 48/48px under 600px), section headings (52/56px) and the visitor's name in the joined state (36/40px). `text-wrap: balance`.
+- **Barlow** (400/500/600) is the interface face: body 16/24px, the hero subline 19/28px, section leads 18/28px, list titles 18/24px at 500, field labels 14/20px at 500, small text 14/20px, buttons 16/20px at 500 (15/20px for the secondary button and the header link), the marker numeral at 600.
+- Both were downloaded from Google Fonts (latin subset) and are self-hosted woff2 in `/fonts` with their OFL licences; Big Shoulders and Barlow 400 are preloaded. `font-display: swap`.
 - Sentence case everywhere. No uppercase tracked labels.
 - Numerals are tabular everywhere.
 - Phone sizes (760px and below): hero headline 40/44px, section headings 36/40px, subline 17/26px, leads 17/26px, joined name 28/32px. Between 761 and 1099px the hero headline is 56/60px.
