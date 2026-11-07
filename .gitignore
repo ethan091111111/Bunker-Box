@@ -2,3 +2,6 @@
 .env*
 node_modules
 .impeccable/review/
+# Keys live in Vercel env vars and GitHub secrets, never in the repo
+*.pem
+*.key

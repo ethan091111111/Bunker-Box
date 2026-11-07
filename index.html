@@ -233,6 +233,59 @@
   .dock.show { transform: none; }
   .dock .btn { width: 100%; }
 
+  /* Assistant */
+  .chat-fab {
+    position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 30;
+    display: grid; place-items: center; width: 56px; height: 56px; border: 0; border-radius: 28px; cursor: pointer;
+    background: var(--olive); color: var(--cream); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+    transition: background-color 150ms var(--ease), transform 150ms var(--ease), bottom 300ms var(--ease);
+  }
+  .chat-fab svg { width: 24px; height: 24px; }
+  .chat-fab:active { transform: scale(0.96); }
+  .chat-fab:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
+  body.dock-on .chat-fab { bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .chat {
+    position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(max(16px, env(safe-area-inset-bottom)) + 72px); z-index: 31;
+    display: flex; flex-direction: column; width: min(380px, calc(100vw - 32px)); height: min(560px, calc(100dvh - 120px));
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16); overflow: hidden;
+    opacity: 0; transform: translateY(8px); visibility: hidden;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s linear 200ms;
+  }
+  .chat.open { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+  body.dock-on .chat { bottom: calc(160px + env(safe-area-inset-bottom)); }
+  .chat-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 20px; background: var(--olive); color: var(--cream); }
+  .chat-head h2 { font: 700 22px/28px var(--serif); }
+  .chat-close { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: var(--cream); cursor: pointer; }
+  .chat-close svg { width: 20px; height: 20px; }
+  .chat-close:focus-visible { outline-color: var(--cream); outline-offset: -4px; }
+  .chat-log { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 20px; overflow-y: auto; overscroll-behavior: contain; }
+  .bubble { max-width: 88%; padding: 12px 16px; border-radius: 12px; font-size: 15px; line-height: 22px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .bubble.bot { align-self: flex-start; background: var(--raised); color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.me { align-self: flex-end; background: var(--olive); color: var(--cream); border-bottom-right-radius: 4px; }
+  .bubble.wait { color: var(--ink-3); }
+  .chat-quick { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chat-quick button {
+    min-height: 36px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 8px; background: transparent; color: var(--ink);
+    font: 400 14px/20px var(--sans); cursor: pointer; transition: background-color 150ms var(--ease);
+  }
+  .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+  .chat-form input {
+    flex: 1; min-width: 0; height: 44px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 8px; background: #fff;
+    color: var(--ink); font: 400 16px/20px var(--sans);
+  }
+  .chat-form input:focus-visible { outline: 2px solid var(--olive); outline-offset: 0; border-color: var(--olive); }
+  .chat-send { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 0; border-radius: 8px; background: var(--olive); color: var(--cream); cursor: pointer; }
+  .chat-send svg { width: 18px; height: 18px; }
+  .chat-send[disabled] { cursor: progress; background: var(--olive-deep); }
+  .chat-note { margin: 0; padding: 0 12px 12px; font-size: 12px; line-height: 16px; color: var(--ink-3); }
+  @media (hover: hover) and (pointer: fine) {
+    .chat-fab:hover, .chat-send:not([disabled]):hover { background: var(--olive-deep); }
+    .chat-quick button:hover { background: var(--raised); }
+  }
+  @media (max-width: 599px) {
+    .chat { right: 8px; left: 8px; width: auto; height: min(560px, calc(100dvh - 104px)); }
+  }
+
   /* One entrance on load */
   @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   h1, .sub, .slip { animation: rise 400ms var(--ease) both; }
@@ -427,92 +480,28 @@
 
 <div class="dock" id="dock" aria-hidden="true"><button class="btn" id="dock-btn" type="button" tabindex="-1">Join the waiting list<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></div>
 
-<script>
-  const $ = s => document.querySelector(s);
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
-  const FALLBACK = "We couldn't post your name just now. Try again in a minute.";
-  $("#year").textContent = new Date().getFullYear();
+<button class="chat-fab" id="chat-fab" type="button" aria-label="Ask a question about Bunker Box" aria-expanded="false" aria-controls="chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></button>
+<section class="chat" id="chat" role="dialog" aria-modal="false" aria-labelledby="chat-title" hidden>
+  <div class="chat-head">
+    <h2 id="chat-title">Ask about Bunker Box</h2>
+    <button class="chat-close" id="chat-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="chat-log" id="chat-log" role="log" aria-live="polite">
+    <p class="bubble bot">Hi, I can answer questions about Bunker Box: what's in the box, the launch and the waiting list.</p>
+    <div class="chat-quick" id="chat-quick">
+      <button type="button">What's in the box?</button>
+      <button type="button">When can I buy one?</button>
+      <button type="button">Who runs Bunker Box?</button>
+    </div>
+  </div>
+  <form class="chat-form" id="chat-form" autocomplete="off">
+    <label class="sr-only" for="chat-input">Your question</label>
+    <input id="chat-input" type="text" maxlength="500" placeholder="Ask a question" enterkeyhint="send">
+    <button class="chat-send" id="chat-send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </form>
+  <p class="chat-note">Answers come from an AI model and can be wrong. Don't share personal details here.</p>
+</section>
 
-  // Count line: only once there are a few names.
-  function showCount(n) {
-    if (typeof n !== "number" || n < 5) return;
-    $("#count").textContent = n.toLocaleString("en-GB");
-    $("#count-line").hidden = false;
-  }
-  fetch("/api/join").then(r => r.ok ? r.json() : null).then(d => d && showCount(d.count)).catch(() => {});
-
-  const board = $("#board"), form = $("#waitlist"), msg = $("#msg"), submit = $("#submit"), submitLabel = $("#submit-label");
-  const nameInput = $("#name");
-
-  // Phone dock: a thumb-height way back to the form once it scrolls away.
-  const dock = $("#dock"), dockBtn = $("#dock-btn"), phone = matchMedia("(max-width: 760px)");
-  let joined = false; const seen = new Map();
-  function updateDock() {
-    const anyVisible = [...seen.values()].some(Boolean);
-    const show = phone.matches && !joined && !anyVisible && scrollY > 200;
-    dock.classList.toggle("show", show);
-    dockBtn.tabIndex = show ? 0 : -1;
-    dock.setAttribute("aria-hidden", String(!show));
-  }
-  const dockWatch = new IntersectionObserver(es => { es.forEach(e => seen.set(e.target, e.isIntersecting)); updateDock(); });
-  [form, $("#last"), $("footer")].forEach(el => dockWatch.observe(el));
-  addEventListener("scroll", updateDock, { passive: true });
-  phone.addEventListener?.("change", updateDock);
-  dockBtn.addEventListener("click", () => {
-    nameInput.focus({ preventScroll: true });
-    board.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-  });
-
-  function fail(text, field) {
-    msg.textContent = text; msg.className = "msg error";
-    if (field) { field.setAttribute("aria-invalid", "true"); field.focus(); }
-    if (!reduced) board.animate([{ transform: "translateX(0)" }, { transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "translateX(0)" }], { duration: 240, easing: EASE });
-  }
-
-  function showJoined(name, position, existing) {
-    joined = true; updateDock();
-    const pos = position ? String(position) : "In";
-    $("#pos").textContent = pos;
-    $("#posted-name").textContent = name;
-    $("#posted-pos").textContent = position ? `Number ${position} on the waiting list` : "On the waiting list";
-    if (existing) $("#posted-text").textContent = "That email was already on the list, so your place is saved. We'll email you before boxes go on sale.";
-    $("#form-extra").hidden = true; $("#posted").hidden = false;
-    if (!reduced) $("#posted").animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: EASE });
-    $("#announce").textContent = $("#posted-text").textContent + (position ? ` You're number ${position}.` : "");
-    $("#share").focus({ preventScroll: true });
-  }
-
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    msg.textContent = ""; msg.className = "msg";
-    form.querySelectorAll("[aria-invalid]").forEach(el => el.removeAttribute("aria-invalid"));
-    const data = Object.fromEntries(new FormData(form));
-    data.consent = form.consent.checked;
-    if (!data.name.trim()) return fail("Add your first name so we know who the box is for.", nameInput);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return fail("That email doesn't look right. Check it and try again.", $("#email"));
-    if (!data.consent) return fail("Tick the box so we're allowed to email you about the launch.", $("#consent"));
-    submit.disabled = true; submitLabel.textContent = "Joining…";
-    try {
-      const res = await fetch("/api/join", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-      const out = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(out.error || FALLBACK);
-      showJoined(data.name.trim(), out.position, out.existing);
-      showCount(out.count);
-    } catch (err) {
-      fail(err instanceof TypeError ? FALLBACK : err.message);
-    } finally {
-      submit.disabled = false; submitLabel.textContent = "Join the waiting list";
-    }
-  });
-
-  $("#share").addEventListener("click", async () => {
-    const share = { title: "Bunker Box", text: "Golf mystery boxes, on sale before Christmas. Get on the waiting list:", url: location.origin };
-    try {
-      if (navigator.share) await navigator.share(share);
-      else { await navigator.clipboard.writeText(share.url); $("#share").textContent = "Link copied"; }
-    } catch {}
-  });
-</script>
+<script src="/site.js"></script>
 </body>
 </html>
