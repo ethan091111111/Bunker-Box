@@ -42,9 +42,17 @@ async function resend(path, body, idempotencyKey) {
 // Email to the team for each new signup. Returns true when Resend accepted it.
 export async function notifySignup(record) {
   if (!canNotify) return false;
+  const first = await sendAlert(record, to.split(",").map(s => s.trim()).filter(Boolean), "");
+  if (first.ok || verifiedFrom) return first.ok;
+  // Resend's test sender only reaches the account owner, and its 403 names that address.
+  const owner = /own email address \(([^)\s]+@[^)\s]+)\)/.exec(first.data?.message || "")?.[1];
+  return owner ? (await sendAlert(record, [owner], "/owner")).ok : false;
+}
+
+async function sendAlert(record, recipients, keySuffix) {
   const { ok, data } = await resend("/emails", {
     from,
-    to: to.split(",").map(s => s.trim()).filter(Boolean),
+    to: recipients,
     reply_to: record.email,
     template: {
       id: "signup-alert",
@@ -56,9 +64,9 @@ export async function notifySignup(record) {
         JOINED: record.joinedAt
       }
     }
-  }, `signup-alert/${record.email}/${record.joinedAt}`);
+  }, `signup-alert/${record.email}/${record.joinedAt}${keySuffix}`);
   if (ok) console.log("Signup alert sent", data.id);
-  return ok;
+  return { ok, data };
 }
 
 // Welcome email to the person who joined. Only once the sending domain is verified.
