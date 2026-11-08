@@ -101,6 +101,8 @@ function setChat(open) {
   }
 }
 fab.addEventListener("click", () => setChat(!chat.classList.contains("open")));
+// Only offer the assistant when the server has it switched on.
+fetch("/api/chat").then(r => r.ok ? r.json() : null).then(d => { if (d?.available) fab.hidden = false; }).catch(() => {});
 $("#chat-close").addEventListener("click", () => setChat(false));
 chat.addEventListener("keydown", e => { if (e.key === "Escape") setChat(false); });
 function bubble(text, who) {

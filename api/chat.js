@@ -7,7 +7,8 @@ import { SYSTEM_PROMPT, REMINDER } from "./_chat-context.js";
 import { redis, hasRedis } from "./_redis.js";
 
 const API = "https://integrate.api.nvidia.com/v1/chat/completions";
-const MODEL = process.env.NIM_MODEL || "meta/llama-3.1-8b-instruct";
+// Fastest on-task model in the NIM benchmark (scripts/nim-benchmark.mjs): ~170 ms to first token.
+const MODEL = process.env.NIM_MODEL || "nvidia/nemotron-3.5-bolt-e4b";
 const ALLOWED_HOSTS = new Set(["www.bunkerbox.uk", "bunkerbox.uk"]);
 
 const MAX_MESSAGES = 10;
@@ -72,12 +73,14 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
 
+  const available = process.env.CHAT_ENABLED !== "false" && Boolean(process.env.NVIDIA_API_KEY);
+  if (req.method === "GET") return res.status(200).json({ available });
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+    res.setHeader("Allow", "GET, POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
   if (!sameSite(req)) return res.status(403).json({ error: "Forbidden" });
-  if (process.env.CHAT_ENABLED === "false" || !process.env.NVIDIA_API_KEY) {
+  if (!available) {
     return res.status(503).json({ error: UNAVAILABLE });
   }
 
